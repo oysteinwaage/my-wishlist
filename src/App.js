@@ -1,28 +1,42 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router';
 import './App.css';
+import { fetdhUsers, loggInn } from './Api';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import Login from './login/Login';
+import MinListe from './minliste/MinListe';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.hentBrukere();
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <MuiThemeProvider>
+          <div>
+            <AppBar
+              title="Login"
+            />
+          </div>
+        </MuiThemeProvider>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route path="/minliste" component={MinListe} />
+        </Switch>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+  hentBrukere: () => dispatch(fetdhUsers()),
+  onLoggInn: (brukernavn, passord) => dispatch(loggInn(brukernavn, passord)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
