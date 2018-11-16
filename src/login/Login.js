@@ -17,7 +17,6 @@ class Login extends Component {
 
   handleClick() {
     this.props.onLoggInn(this.state.username, this.state.password);
-    console.log(this.state);
   }
 
   render() {

@@ -18,3 +18,11 @@ export function brukerLoggetInn(bruker) {
     },
   };
 }
+
+export const MOTTA_MIN_ONSKELISTE = 'MOTTA_MIN_ONSKELISTE';
+export function mottaMinOnskeliste(nyListe) {
+  return {
+    type: MOTTA_MIN_ONSKELISTE,
+    nyListe,
+  };
+}

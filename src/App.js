@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import './App.css';
-import { fetdhUsers, loggInn } from './Api';
+import { fetdhUsers } from './Api';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Login from './login/Login';
@@ -36,7 +36,6 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   hentBrukere: () => dispatch(fetdhUsers()),
-  onLoggInn: (brukernavn, passord) => dispatch(loggInn(brukernavn, passord)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
