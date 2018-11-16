@@ -48,6 +48,12 @@ class MinListe extends Component {
     this.forceUpdate();
   };
 
+  onKeyPressed = event => {
+    if (event.keyCode === 13) {
+      this.lagreOnske();
+    }
+  };
+
   populerMinListe() {
     const { mineOnsker } = this.props;
     return mineOnsker.map(value =>
@@ -55,7 +61,7 @@ class MinListe extends Component {
         <ListItem>
           <ListItemText
             primary={value.onskeTekst}
-            secondary={value.url ? 'lag tekst med url?' : null}
+            secondary={value.url && <a href={value.url}>Her kan den kjøpes</a>}
           />
           <ListItemSecondaryAction>
             <IconButton aria-label="Edit" onClick={() => this.endreOnske(value)}>
@@ -87,6 +93,7 @@ class MinListe extends Component {
             onChange={this.onChangeTextField}
             margin="normal"
             variant="outlined"
+            onKeyDown={this.onKeyPressed}
           />
           <Button className="leggTilNyttOnskeKnapp" onClick={() => this.lagreOnske()} variant="fab" color="primary" aria-label="Add">
             <AddIcon />
