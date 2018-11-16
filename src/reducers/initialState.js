@@ -3,6 +3,7 @@ export default {
     email: '',
     navn: 'Fornavn Etternavn',
     mineOnsker: [],
+    openLenkeDialog: false,
   },
   brukere: {}
 };

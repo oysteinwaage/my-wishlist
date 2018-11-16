@@ -9,13 +9,16 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
+import WebLinkIcon from '@material-ui/icons/Link';
 import EditIcon from '@material-ui/icons/Edit'
 import Divider from '@material-ui/core/Divider';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { fetdhMinOnskeliste, updateMyList } from '../Api';
+import { toggleLenkeDialog } from '../actions/actions';
 import { fjernOnskeFraListe, leggTilNyttOnskeIListe, myWishlistId } from '../utils/util';
+import LenkeDialog from './LeggTilLenkeDialog';
 
 let nyttOnskeTekst = '';
 
@@ -55,21 +58,30 @@ class MinListe extends Component {
   };
 
   populerMinListe() {
-    const { mineOnsker } = this.props;
+    const { mineOnsker, onToggleLenkeDialog } = this.props;
     return mineOnsker.map(value =>
-      <div key={value.onskeTekst}>
+      <div key={value.onskeTekst + mineOnsker.indexOf(value)}>
         <ListItem>
           <ListItemText
             primary={value.onskeTekst}
-            secondary={value.url && <a href={value.url}>Her kan den kjøpes</a>}
+            secondary={value.url && <a href={value.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
           />
           <ListItemSecondaryAction>
-            <IconButton aria-label="Edit" onClick={() => this.endreOnske(value)}>
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label="Delete" onClick={() => this.slettOnske(value)}>
-              <DeleteIcon />
-            </IconButton>
+            <Tooltip title='Legg til lenke'>
+              <IconButton aria-label="AddLink" onClick={() => onToggleLenkeDialog(value)}>
+                <WebLinkIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Endre ønske'>
+              <IconButton aria-label="Edit" onClick={() => this.endreOnske(value)}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Slett'>
+              <IconButton aria-label="Delete" onClick={() => this.slettOnske(value)}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           </ListItemSecondaryAction>
         </ListItem>
         <Divider />
@@ -102,14 +114,13 @@ class MinListe extends Component {
 
         <div>
           <Grid item xs={12} md={6}>
-            <Typography variant="h6" className="overskrift">
-              Min ønskeliste
-            </Typography>
+            <h2>Min ønskeliste</h2>
             <div className="minOnskeliste">
               <List dense={false}>
                 {mineOnsker.length > 0 && <Divider />}
                 {this.populerMinListe()}
               </List>
+              <LenkeDialog />
             </div>
           </Grid>
         </div>
@@ -126,6 +137,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onAbonnerPaaMinOnskeliste: (userId) => dispatch(fetdhMinOnskeliste(userId)),
+  onToggleLenkeDialog: (index) => dispatch(toggleLenkeDialog(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MinListe);

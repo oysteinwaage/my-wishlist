@@ -26,3 +26,11 @@ export function mottaMinOnskeliste(nyListe) {
     nyListe,
   };
 }
+
+export const TOGGLE_LENKE_DIALOG = 'TOGGLE_LENKE_DIALOG';
+export function toggleLenkeDialog(index) {
+  return {
+    type: TOGGLE_LENKE_DIALOG,
+    index,
+  };
+}
