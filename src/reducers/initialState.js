@@ -7,6 +7,6 @@ export default {
   },
   brukere: {},
   config: {
-    headerTekst: 'Login'
+    headerTekst: 'Innlogging'
   },
 };

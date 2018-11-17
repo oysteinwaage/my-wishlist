@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import './App.css';
 import { fetdhUsers } from './Api';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import Login from './login/Login';
 import MinListe from './minliste/MinListe';
+import AppBar from './components/AppBarComponent';
 
 class App extends Component {
   componentDidMount() {
@@ -16,13 +15,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MuiThemeProvider>
-          <div>
-            <AppBar
-              title={this.props.headerTekst}
-            />
-          </div>
-        </MuiThemeProvider>
+        <AppBar/>
         <Switch>
           <Route exact path="/" component={Login} />
           <Route path="/minliste" component={MinListe} />

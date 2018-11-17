@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button';
 import logo from "../img/logo.svg";
 import { loggInn } from "../Api";
 import connect from "react-redux/es/connect/connect";
@@ -28,25 +27,26 @@ class Login extends Component {
             Ønskelisten er her!! God Jul :D
           </p>
         </header>
-        <MuiThemeProvider>
-          <div>
-            <TextField
-              hintText="Fyll inn email-addresse"
-              floatingLabelText="E-Mail"
-              onChange={(event, newValue) => this.setState({ username: newValue })}
-            />
-            <br />
-            <TextField
-              type="password"
-              hintText="Fyll inn passord"
-              floatingLabelText="Passord"
-              onChange={(event, newValue) => this.setState({ password: newValue })}
-            />
-            <br />
-            <RaisedButton label="Logg inn" primary={true} style={style}
-                          onClick={(event) => this.handleClick(event)} />
-          </div>
-        </MuiThemeProvider>
+        <div>
+          <TextField
+            id="emailFelt"
+            margin="normal"
+            //variant="outlined"
+            label="Fyll inn email-addresse"
+            onChange={(event) => this.setState({ username: event.target.value })}
+          />
+          <br />
+          <TextField
+            id="passordFelt"
+            type="password"
+            label="Fyll inn passord"
+            onChange={(event) => this.setState({ password: event.target.value })}
+          />
+          <br />
+          <Button variant="contained" color="primary" onClick={() => this.handleClick()} style={style}>
+            Logg inn
+          </Button>
+        </div>
       </div>
     );
   }
