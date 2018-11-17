@@ -5,5 +5,8 @@ export default {
     mineOnsker: [],
     openLenkeDialog: false,
   },
-  brukere: {}
+  brukere: {},
+  config: {
+    headerTekst: 'Login'
+  },
 };

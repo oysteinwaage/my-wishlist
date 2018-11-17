@@ -16,7 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { fetdhMinOnskeliste, updateMyList } from '../Api';
-import { toggleLenkeDialog } from '../actions/actions';
+import { toggleLenkeDialog, endreHeaderTekst } from '../actions/actions';
 import { fjernOnskeFraListe, leggTilNyttOnskeIListe, myWishlistId } from '../utils/util';
 import LenkeDialog from './LeggTilLenkeDialog';
 
@@ -24,6 +24,7 @@ let nyttOnskeTekst = '';
 
 class MinListe extends Component {
   componentDidMount() {
+    this.props.onEndreHeaderTekst('Rediger ønskeliste');
     this.props.onAbonnerPaaMinOnskeliste(myWishlistId(this.props.innloggetBrukerMail));
   }
 
@@ -138,6 +139,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onAbonnerPaaMinOnskeliste: (userId) => dispatch(fetdhMinOnskeliste(userId)),
   onToggleLenkeDialog: (index) => dispatch(toggleLenkeDialog(index)),
+  onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MinListe);

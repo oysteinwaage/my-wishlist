@@ -19,7 +19,7 @@ class App extends Component {
         <MuiThemeProvider>
           <div>
             <AppBar
-              title="Login"
+              title={this.props.headerTekst}
             />
           </div>
         </MuiThemeProvider>
@@ -32,7 +32,9 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  headerTekst: state.config.headerTekst,
+});
 
 const mapDispatchToProps = dispatch => ({
   hentBrukere: () => dispatch(fetdhUsers()),

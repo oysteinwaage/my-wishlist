@@ -34,3 +34,11 @@ export function toggleLenkeDialog(index) {
     index,
   };
 }
+
+export const ENDRE_HEADER_TEKST = 'ENDRE_HEADER_TEKST';
+export function endreHeaderTekst(nyTekst) {
+  return {
+    type: ENDRE_HEADER_TEKST,
+    nyTekst,
+  };
+}
