@@ -5,8 +5,8 @@ export default function innloggetBruker(state = initialState.innloggetBruker, ac
   switch (action.type) {
     case BRUKER_LOGGET_INN:
       return Object.assign({}, state, {
-        email: action.data.bruker.email,
-        name: action.data.bruker.displayName,
+        email: action.user.email,
+        navn: action.user.displayName,
       });
     case MOTTA_MIN_ONSKELISTE:
       return Object.assign({}, state, {

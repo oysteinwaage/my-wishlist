@@ -1,15 +1,17 @@
 import { push } from 'connected-react-router';
-import { usersRef, authRef, wishlistRef } from "./config/firebase";
-import { TEST_ACTION, brukerLoggetInn, mottaMinOnskeliste } from "./actions/actions";
+import { usersRef, auth, wishlistRef } from "./config/firebase";
+import { brukerLoggetInn, mottaMinOnskeliste } from "./actions/actions";
+import { myWishlistId } from './utils/util';
 
-export const updateMyList = (userId, newWishlist) => {
-  wishlistRef(userId).set(newWishlist);
+
+export const updateMyList = (newWishlist) => {
+  wishlistRef(myWishlistId(auth.currentUser.email)).set(newWishlist);
 }
 
 export const loggInn = (brukernavn, passord) => async dispatch => {
-  authRef.signInWithEmailAndPassword(brukernavn, passord)
+  auth.signInWithEmailAndPassword(brukernavn, passord)
     .then(user => {
-      dispatch(brukerLoggetInn(user));
+      dispatch(brukerLoggetInn(user.user));
       dispatch(push('/minliste'));
     })
     .catch(function (error) {
@@ -17,17 +19,30 @@ export const loggInn = (brukernavn, passord) => async dispatch => {
     });
 };
 
-export const fetdhMinOnskeliste = (userId) => async dispatch => {
-  wishlistRef(userId).on("value", snapshot => {
+export const opprettNyBruker = (brukernavn, passord, navn) => async dispatch => {
+  auth.createUserWithEmailAndPassword(brukernavn, passord)
+    .then(() => {
+      auth.currentUser.updateProfile({ displayName: navn, photoURL: null })
+        .then(() => {
+          dispatch(brukerLoggetInn(auth.currentUser));
+          dispatch(push('/minliste'));
+          // alert('Gratulerer du har opprettet bruker. Nå kan du logge inn!')
+          // dispatch(toggleVisOpprettBruker());
+        })
+    })
+    .catch(function (error) {
+      alert(error);
+    });
+};
+
+export const fetdhMinOnskeliste = () => async dispatch => {
+  wishlistRef(myWishlistId(auth.currentUser.email)).on("value", snapshot => {
     dispatch(mottaMinOnskeliste(snapshot.val()));
   });
 };
 
 export const fetdhUsers = () => async dispatch => {
   usersRef.on("value", snapshot => {
-    dispatch({
-      type: TEST_ACTION,
-      payload: snapshot.val()
-    });
+    // doSomething
   });
 };

@@ -7,6 +7,7 @@ export default {
   },
   brukere: {},
   config: {
-    headerTekst: 'Innlogging'
+    headerTekst: 'Innlogging',
+    visOpprettNyBruker: false,
   },
 };

@@ -9,21 +9,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { updateMyList } from "../Api";
 import connect from "react-redux/es/connect/connect";
 import { toggleLenkeDialog } from '../actions/actions';
-import { myWishlistId, leggTilLenkeTilOnske } from '../utils/util';
-
-let url = '';
+import { leggTilLenkeTilOnske } from '../utils/util';
 
 class LeggTilLenkeDialog extends Component {
-
-  onChangeTextField = e => {
-    url = e.target.value;
-  };
+  constructor(props) {
+    super(props);
+    this.state = { url: '' };
+  }
 
   lagreLenke = () => {
-    const { innloggetBrukerMail, mineOnsker, openLenkeDialogOnske, onToggleLenkeDialog } = this.props;
-    updateMyList(myWishlistId(innloggetBrukerMail), leggTilLenkeTilOnske(mineOnsker, url, openLenkeDialogOnske));
+    const { mineOnsker, openLenkeDialogOnske, onToggleLenkeDialog } = this.props;
+    updateMyList(leggTilLenkeTilOnske(mineOnsker, this.state.url, openLenkeDialogOnske));
     onToggleLenkeDialog();
-    url = '';
+    this.setState({url: ''});
   };
 
   render() {
@@ -48,7 +46,7 @@ class LeggTilLenkeDialog extends Component {
               label="http://www.eksempel.com"
               type="url"
               fullWidth
-              onChange={this.onChangeTextField}
+              onChange={(e) => this.setState({ url: e.target.value })}
             />
           </DialogContent>
           <DialogActions>
@@ -66,7 +64,6 @@ class LeggTilLenkeDialog extends Component {
 }
 
 const mapStateToProps = state => ({
-  innloggetBrukerMail: state.innloggetBruker.email,
   mineOnsker: state.innloggetBruker.mineOnsker,
   openLenkeDialog: state.innloggetBruker.openLenkeDialog,
   openLenkeDialogOnske: state.innloggetBruker.openLenkeDialogOnske,

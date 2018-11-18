@@ -17,40 +17,38 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import { fetdhMinOnskeliste, updateMyList } from '../Api';
 import { toggleLenkeDialog, endreHeaderTekst } from '../actions/actions';
-import { fjernOnskeFraListe, leggTilNyttOnskeIListe, myWishlistId } from '../utils/util';
+import { fjernOnskeFraListe, leggTilNyttOnskeIListe } from '../utils/util';
 import LenkeDialog from './LeggTilLenkeDialog';
 
-let nyttOnskeTekst = '';
-
 class MinListe extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { nyttOnskeTekst: ''}
+  }
   componentDidMount() {
     this.props.onEndreHeaderTekst('Rediger ønskeliste');
-    this.props.onAbonnerPaaMinOnskeliste(myWishlistId(this.props.innloggetBrukerMail));
+    this.props.onAbonnerPaaMinOnskeliste();
   }
 
   lagreOnske() {
-    const { innloggetBrukerMail, mineOnsker } = this.props;
+    const { mineOnsker } = this.props;
+    const { nyttOnskeTekst } = this.state;
     if (nyttOnskeTekst) {
-      updateMyList(myWishlistId(innloggetBrukerMail), leggTilNyttOnskeIListe(mineOnsker, nyttOnskeTekst))
+      updateMyList(leggTilNyttOnskeIListe(mineOnsker, nyttOnskeTekst))
     }
-    nyttOnskeTekst = '';
+    this.setState({nyttOnskeTekst: ''})
   }
 
   slettOnske(onske) {
-    const { innloggetBrukerMail, mineOnsker } = this.props;
-    updateMyList(myWishlistId(innloggetBrukerMail), fjernOnskeFraListe(mineOnsker, onske));
+    const { mineOnsker } = this.props;
+    updateMyList(fjernOnskeFraListe(mineOnsker, onske));
   }
 
   endreOnske(onske) {
-    //const { innloggetBrukerMail, mineOnsker } = this.props;
-    // updateMyList(myWishlistId(innloggetBrukerMail), fjernOnskeFraListe(mineOnsker, onske));
+    //const { mineOnsker } = this.props;
+    // updateMyList(fjernOnskeFraListe(mineOnsker, onske));
     // TODO fikse endring. Men hvordan? popoup-input? rad blir plutselig editerbar?
   }
-
-  onChangeTextField = event => {
-    nyttOnskeTekst = event.target.value;
-    this.forceUpdate();
-  };
 
   onKeyPressed = event => {
     if (event.keyCode === 13) {
@@ -91,19 +89,19 @@ class MinListe extends Component {
   }
 
   render() {
-    const { innloggetBrukerMail, mineOnsker } = this.props;
+    const { innloggetBrukerNavn, mineOnsker } = this.props;
     return (
       <div className="MinListe">
         <p>
-          Velkommen {innloggetBrukerMail}
+          Velkommen {innloggetBrukerNavn}
         </p>
         <div className="leggTilNyttOnske">
           <TextField
             id="nyttOnskeFelt"
             label="Legg til nytt ønske"
             className="nyttOnskeFelt"
-            value={nyttOnskeTekst}
-            onChange={this.onChangeTextField}
+            value={this.state.nyttOnskeTekst}
+            onChange={(e) => this.setState({nyttOnskeTekst: e.target.value})}
             margin="normal"
             variant="outlined"
             onKeyDown={this.onKeyPressed}
@@ -132,12 +130,11 @@ class MinListe extends Component {
 
 const mapStateToProps = state => ({
   innloggetBrukerNavn: state.innloggetBruker.navn,
-  innloggetBrukerMail: state.innloggetBruker.email,
   mineOnsker: state.innloggetBruker.mineOnsker,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAbonnerPaaMinOnskeliste: (userId) => dispatch(fetdhMinOnskeliste(userId)),
+  onAbonnerPaaMinOnskeliste: () => dispatch(fetdhMinOnskeliste()),
   onToggleLenkeDialog: (index) => dispatch(toggleLenkeDialog(index)),
   onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
 });

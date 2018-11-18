@@ -11,7 +11,6 @@ class AppBarComponent extends Component {
 
   render() {
     const { classes } = this.props
-    console.log(this.props);
     return (
       <AppBar position="static">
         <Toolbar>

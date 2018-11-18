@@ -1,21 +1,8 @@
-export const TEST_ACTION = 'TEST_ACTION';
-export function testAction(email, navn) {
-  return {
-    type: TEST_ACTION,
-    data: {
-      email,
-      navn,
-    },
-  };
-}
-
 export const BRUKER_LOGGET_INN = 'BRUKER_LOGGET_INN';
-export function brukerLoggetInn(bruker) {
+export function brukerLoggetInn(user) {
   return {
     type: BRUKER_LOGGET_INN,
-    data: {
-      bruker: bruker.user,
-    },
+    user,
   };
 }
 
@@ -40,5 +27,12 @@ export function endreHeaderTekst(nyTekst) {
   return {
     type: ENDRE_HEADER_TEKST,
     nyTekst,
+  };
+}
+
+export const TOGGLE_VIS_OPPRETT_BRUKER = 'TOGGLE_VIS_OPPRETT_BRUKER';
+export function toggleVisOpprettBruker() {
+  return {
+    type: TOGGLE_VIS_OPPRETT_BRUKER,
   };
 }
