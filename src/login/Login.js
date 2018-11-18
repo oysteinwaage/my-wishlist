@@ -63,7 +63,7 @@ class Login extends Component {
             id="emailFelt"
             margin="normal"
             //variant="outlined"
-            label="Fyll inn email-addresse"
+            label="Fyll inn email-adresse"
             onChange={(event) => this.setState({ username: event.target.value })}
           />
           <br />
