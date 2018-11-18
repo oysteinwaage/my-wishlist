@@ -1,4 +1,4 @@
-export const myWishlistId = myEmail => myEmail.replace('@', '').replace('.', '');
+export const myWishlistId = myEmail => myEmail.replace('@', '').replace(/\./g, '');
 export const leggTilNyttOnskeIListe = (eksisterende, nytt) => [...eksisterende, { onskeTekst: nytt }]
 export const fjernOnskeFraListe = (eksisterende, slett) => eksisterende.filter(i => i !== slett);
 
