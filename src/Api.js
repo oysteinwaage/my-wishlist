@@ -5,7 +5,7 @@ import { myWishlistId } from './utils/util';
 
 
 export const updateMyList = (newWishlist) => {
-  wishlistRef(myWishlistId(auth.currentUser.email)).set(newWishlist);
+  wishlistRef(myWishlistId()).set(newWishlist);
 }
 
 export const loggInn = (brukernavn, passord) => async dispatch => {
@@ -36,7 +36,7 @@ export const opprettNyBruker = (brukernavn, passord, navn) => async dispatch => 
 };
 
 export const fetdhMinOnskeliste = () => async dispatch => {
-  wishlistRef(myWishlistId(auth.currentUser.email)).on("value", snapshot => {
+  wishlistRef(myWishlistId()).on("value", snapshot => {
     dispatch(mottaMinOnskeliste(snapshot.val()));
   });
 };

@@ -5,6 +5,7 @@ import './App.css';
 import { fetdhUsers } from './Api';
 import Login from './login/Login';
 import MinListe from './minliste/MinListe';
+import Vennelister from './vennelister/VenneLister';
 import AppBar from './components/AppBarComponent';
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route path="/minliste" component={MinListe} />
+          <Route path="/vennelister" component={Vennelister} />
         </Switch>
       </div>
     );
