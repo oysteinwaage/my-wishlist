@@ -14,6 +14,8 @@ import { endreHeaderTekst } from '../actions/actions';
 import { fetdhUsers, updateWishlistFor } from '../Api';
 import { markerOnskeSomKjopt, finnPersonMedUid, erInnloggetBrukersUid } from '../utils/util';
 
+const kjoptOnskeClassname = onske => onske.kjopt ? erInnloggetBrukersUid(onske.kjoptAv) ? 'onskeKjopt kjoptAvDeg' : 'onskeKjopt' : '';
+
 class VenneLister extends Component {
   componentDidMount() {
     this.props.onEndreHeaderTekst('Venners lister');
@@ -28,17 +30,18 @@ class VenneLister extends Component {
 
   lenkeEllerKjoptAv(onske) {
     if (onske.kjopt) {
-      return 'Kjøpt av ' + finnPersonMedUid(onske.kjoptAv, this.props.mineVenner).navn;
+      const kjoper = finnPersonMedUid(onske.kjoptAv, this.props.mineVenner);
+      return 'Tatt av ' + (erInnloggetBrukersUid(kjoper.uid) ? 'deg' : kjoper.navn);
     }
     return onske.url && (<a href={onske.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>);
   }
 
   populerOnskeliste(onskeliste) {
-    const { classes } = this.props;
     return onskeliste.map(onske =>
-      <div key={onske.onskeTekst + onskeliste.indexOf(onske)} className={onske.kjopt ? classes.onskeKjopt : ''}>
-        <ListItem className='onskeKjopt'>
+      <div key={onske.onskeTekst + onskeliste.indexOf(onske)}>
+        <ListItem className={kjoptOnskeClassname(onske)}>
           <ListItemText
+            className={onske.kjopt ? 'onskeKjoptTekst' : ''}
             primary={onske.onskeTekst}
             secondary={this.lenkeEllerKjoptAv(onske)}
           />
