@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import './App.css';
-import { fetdhUsers } from './Api';
 import Login from './login/Login';
 import MinListe from './minliste/MinListe';
 import Vennelister from './vennelister/VenneLister';
@@ -10,7 +9,6 @@ import AppBar from './components/AppBarComponent';
 
 class App extends Component {
   componentDidMount() {
-    this.props.hentBrukere();
   }
 
   render() {
@@ -32,7 +30,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  hentBrukere: () => dispatch(fetdhUsers()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

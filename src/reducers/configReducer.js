@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import { ENDRE_HEADER_TEKST, TOGGLE_VIS_OPPRETT_BRUKER } from '../actions/actions';
+import { ENDRE_HEADER_TEKST, TOGGLE_VIS_OPPRETT_BRUKER, MOTTA_BRUKERE } from '../actions/actions';
 
 export default function config(state = initialState.config, action) {
   switch (action.type) {
@@ -10,6 +10,10 @@ export default function config(state = initialState.config, action) {
     case TOGGLE_VIS_OPPRETT_BRUKER:
       return Object.assign({}, state, {
         visOpprettNyBruker: !state.visOpprettNyBruker,
+      });
+    case MOTTA_BRUKERE:
+      return Object.assign({}, state, {
+        brukere: action.brukere,
       });
     default:
       return state;

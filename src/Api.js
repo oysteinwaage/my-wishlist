@@ -1,8 +1,9 @@
 import { push } from 'connected-react-router';
 import { usersRef, auth, wishlistRef } from "./config/firebase";
-import { brukerLoggetInn, mottaMinOnskeliste } from "./actions/actions";
+import { brukerLoggetInn, mottaMinOnskeliste, mottaBrukere, mottaValgtVennsListe } from "./actions/actions";
 import { myWishlistId } from './utils/util';
 
+const mapTolist = res => Object.keys(res.val()).map(k => res.val()[k]);
 
 export const updateMyList = (newWishlist) => {
   wishlistRef(myWishlistId()).set(newWishlist);
@@ -19,11 +20,16 @@ export const loggInn = (brukernavn, passord) => async dispatch => {
     });
 };
 
+// export const leggTilOnskeTilMinListe = (nyttOnske) => {
+//   databaseMedRef('wishlists/' + auth.currentUser.uid).
+// }
+
 export const opprettNyBruker = (brukernavn, passord, navn) => async dispatch => {
   auth.createUserWithEmailAndPassword(brukernavn, passord)
     .then(() => {
       auth.currentUser.updateProfile({ displayName: navn, photoURL: null })
         .then(() => {
+          usersRef.push().set({ navn, email: brukernavn, uid: auth.currentUser.uid });
           dispatch(brukerLoggetInn(auth.currentUser));
           dispatch(push('/minliste'));
           // alert('Gratulerer du har opprettet bruker. Nå kan du logge inn!')
@@ -41,8 +47,14 @@ export const fetdhMinOnskeliste = () => async dispatch => {
   });
 };
 
+export const fetdhOnskelisteForUid = (uid) => async dispatch => {
+  wishlistRef(uid).on("value", snapshot => {
+    dispatch(mottaValgtVennsListe(snapshot.val()));
+  });
+};
+
 export const fetdhUsers = () => async dispatch => {
-  usersRef.on("value", snapshot => {
-    // doSomething
+  usersRef.once('value', snapshot => {
+    dispatch(mottaBrukere(mapTolist(snapshot)));
   });
 };

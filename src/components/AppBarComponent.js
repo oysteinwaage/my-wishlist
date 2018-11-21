@@ -17,9 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
-import { erLoggetInn } from '../utils/util';
-
-const iOS = false; //process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 class AppBarComponent extends Component {
   constructor(props) {
@@ -42,18 +40,20 @@ class AppBarComponent extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, headerTekst } = this.props;
+    const visHamburgerMeny = headerTekst !== 'Innlogging' && headerTekst !== 'Opprett ny bruker';
     return (
       <AppBar position="static">
         <Toolbar>
+          {visHamburgerMeny &&
           <IconButton className={classes.menuButton} onClick={() => this.setState({ drawerOpen: true })} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
+          }
           <Typography variant="h6" color="inherit" className={classes.grow}>
             {this.props.headerTekst}
           </Typography>
         </Toolbar>
-        {erLoggetInn() &&
         <SwipeableDrawer open={this.state.drawerOpen} onOpen={() => this.setState({ drawerOpen: true })} onClose={() => this.setState({ drawerOpen: false })}
                          disableBackdropTransition={!iOS} disableDiscovery={iOS}>
           <div className={classes.list}>
@@ -74,7 +74,6 @@ class AppBarComponent extends Component {
             <Divider />
           </div>
         </SwipeableDrawer>
-        }
       </AppBar>
     );
   }

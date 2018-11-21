@@ -36,3 +36,28 @@ export function toggleVisOpprettBruker() {
     type: TOGGLE_VIS_OPPRETT_BRUKER,
   };
 }
+
+export const MOTTA_BRUKERE = 'MOTTA_BRUKERE';
+export function mottaBrukere(brukere) {
+  return {
+    type: MOTTA_BRUKERE,
+    brukere
+  };
+}
+
+// vennelister
+export const MOTTA_VALGT_VENNS_LISTE = 'MOTTA_VALGT_VENNS_LISTE';
+export function mottaValgtVennsListe(nyListe) {
+  return {
+    type: MOTTA_VALGT_VENNS_LISTE,
+    nyListe,
+  };
+}
+
+export const SETTE_VALGT_VENN = 'SETTE_VALGT_VENN';
+export function setValgtVenn(venn) {
+  return {
+    type: SETTE_VALGT_VENN,
+    venn,
+  };
+}

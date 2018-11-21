@@ -1,6 +1,6 @@
 import {auth} from '../config/firebase';
 
-export const myWishlistId = () => auth.currentUser.email.replace('@', '').replace(/\./g, '');
+export const myWishlistId = () => auth.currentUser.uid;
 export const leggTilNyttOnskeIListe = (eksisterende, nytt) => [...eksisterende, { onskeTekst: nytt }]
 export const fjernOnskeFraListe = (eksisterende, slett) => eksisterende.filter(i => i !== slett);
 
