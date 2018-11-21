@@ -7,7 +7,12 @@ const mapTolist = res => Object.keys(res.val()).map(k => res.val()[k]);
 
 export const updateMyList = (newWishlist) => {
   wishlistRef(myWishlistId()).set(newWishlist);
-}
+};
+
+export const updateWishlistFor = (ownerUid, newWishlist) => async dispatch => {
+  wishlistRef(ownerUid).set(newWishlist)
+    .catch(error => {alert(error)});
+};
 
 export const loggInn = (brukernavn, passord) => async dispatch => {
   auth.signInWithEmailAndPassword(brukernavn, passord)

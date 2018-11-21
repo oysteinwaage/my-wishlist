@@ -11,7 +11,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import ListeVelger from './ListeVelger';
 import { endreHeaderTekst } from '../actions/actions';
-import { fetdhUsers } from '../Api';
+import { fetdhUsers, updateWishlistFor } from '../Api';
+import { markerOnskeSomKjopt, finnPersonMedUid, erInnloggetBrukersUid } from '../utils/util';
 
 class VenneLister extends Component {
   componentDidMount() {
@@ -19,17 +20,31 @@ class VenneLister extends Component {
     this.props.onHentBrukere();
   }
 
+  onMarkerOnskeSomKjopt = onske => event => {
+    const { valgtVenn, valgtVennsListe, onUpdateWishlistFor } = this.props;
+
+    onUpdateWishlistFor(valgtVenn.uid, markerOnskeSomKjopt(valgtVennsListe, onske, event.target.checked));
+  }
+
+  lenkeEllerKjoptAv(onske) {
+    if (onske.kjopt) {
+      return 'Kjøpt av ' + finnPersonMedUid(onske.kjoptAv, this.props.mineVenner).navn;
+    }
+    return onske.url && (<a href={onske.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>);
+  }
+
   populerOnskeliste(onskeliste) {
-    return onskeliste.map(value =>
-      <div key={value.onskeTekst + onskeliste.indexOf(value)}>
-        <ListItem>
+    const { classes } = this.props;
+    return onskeliste.map(onske =>
+      <div key={onske.onskeTekst + onskeliste.indexOf(onske)} className={onske.kjopt ? classes.onskeKjopt : ''}>
+        <ListItem className='onskeKjopt'>
           <ListItemText
-            primary={value.onskeTekst}
-            secondary={value.url && <a href={value.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
+            primary={onske.onskeTekst}
+            secondary={this.lenkeEllerKjoptAv(onske)}
           />
           <ListItemSecondaryAction>
             <Tooltip title='Kjøpt'>
-              <Checkbox/>
+              <Checkbox checked={onske.kjopt} disabled={onske.kjopt && !erInnloggetBrukersUid(onske.kjoptAv)} onChange={this.onMarkerOnskeSomKjopt(onske)} />
             </Tooltip>
           </ListItemSecondaryAction>
         </ListItem>
@@ -44,7 +59,7 @@ class VenneLister extends Component {
       <div className="VennersListeSide">
         <ListeVelger />
         <Grid item xs={12} md={6}>
-          <h2>{`Ønskelisten til ${valgtVenn && valgtVenn.navn}`}</h2>
+          <h2>{valgtVenn && valgtVenn.navn && `Ønskelisten til ${valgtVenn.navn}`}</h2>
           <div className="minOnskeliste">
             <List dense={false}>
               {valgtVennsListe.length > 0 && <Divider />}
@@ -59,12 +74,15 @@ class VenneLister extends Component {
 
 const mapStateToProps = state => ({
   valgtVenn: state.vennersLister.valgtVenn,
+  mineVenner: state.vennersLister.venner,
   valgtVennsListe: state.vennersLister.valgtVennsListe || [],
 });
 
 const mapDispatchToProps = dispatch => ({
   onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
   onHentBrukere: () => dispatch(fetdhUsers()),
+  onUpdateWishlistFor: (uid, newList) => dispatch(updateWishlistFor(uid, newList)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VenneLister);
+
