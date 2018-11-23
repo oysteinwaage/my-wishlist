@@ -1,17 +1,27 @@
 import { push } from 'connected-react-router';
-import { usersRef, auth, wishlistRef } from "./config/firebase";
+import { usersRef, auth, wishlistRef, myWishlistRef } from "./config/firebase";
 import { brukerLoggetInn, mottaMinOnskeliste, mottaBrukere, mottaValgtVennsListe } from "./actions/actions";
 import { myWishlistId } from './utils/util';
 
-const mapTolist = res => Object.keys(res.val()).map(k => res.val()[k]);
+const mapTolist = res => res.val() ?
+  Object.keys(res.val()).map(k => {
+    return Object.assign({}, res.val()[k], { key: k, })
+  }) : [];
 
-export const updateMyList = (newWishlist) => {
-  wishlistRef(myWishlistId()).set(newWishlist);
+export const addWishToMyList = newWish => {
+  myWishlistRef().push().set(newWish);
 };
 
-export const updateWishlistFor = (ownerUid, newWishlist) => async dispatch => {
-  wishlistRef(ownerUid).set(newWishlist)
-    .catch(error => {alert(error)});
+export const removeWishFromMyList = wishId => {
+  myWishlistRef().child(wishId).remove();
+};
+
+export const updateLinkOnWishOnMyList = (newLink, wishId) => {
+  myWishlistRef().child(wishId).update({ url: newLink});
+};
+
+export const updateWishOnListWith = (newValues, wish, listId) => {
+  wishlistRef(listId).child(wish.key).update(Object.assign({}, wish, newValues));
 };
 
 export const loggInn = (brukernavn, passord) => async dispatch => {
@@ -24,10 +34,6 @@ export const loggInn = (brukernavn, passord) => async dispatch => {
       alert(error);
     });
 };
-
-// export const leggTilOnskeTilMinListe = (nyttOnske) => {
-//   databaseMedRef('wishlists/' + auth.currentUser.uid).
-// }
 
 export const opprettNyBruker = (brukernavn, passord, navn) => async dispatch => {
   auth.createUserWithEmailAndPassword(brukernavn, passord)
@@ -47,14 +53,14 @@ export const opprettNyBruker = (brukernavn, passord, navn) => async dispatch => 
 };
 
 export const fetdhMinOnskeliste = () => async dispatch => {
-  wishlistRef(myWishlistId()).on("value", snapshot => {
-    dispatch(mottaMinOnskeliste(snapshot.val()));
+  wishlistRef(myWishlistId()).on('value', snapshot => {
+    dispatch(mottaMinOnskeliste(mapTolist(snapshot)));
   });
 };
 
 export const fetdhOnskelisteForUid = (uid) => async dispatch => {
   wishlistRef(uid).on("value", snapshot => {
-    dispatch(mottaValgtVennsListe(snapshot.val()));
+    dispatch(mottaValgtVennsListe(mapTolist(snapshot)));
   });
 };
 

@@ -7,8 +7,15 @@ import { FirebaseConfig } from './keys';
 firebase.initializeApp(FirebaseConfig);
 const databaseRef = firebase.database().ref();
 
-export const databaseMedRef = (ref) => firebase.database().ref(ref);
+export const db = firebase.database();
+
+// Users
 export const usersRef = databaseRef.child('users');
-export const wishlistRef = myListId => databaseRef.child('wishlists').child(myListId);
+
+// Wishlist
+export const wishlistRef = listId => db.ref('wishlists/' + listId);
+export const myWishlistRef = () => wishlistRef(myUid());
+
 
 export const auth = firebase.auth();
+export const myUid = () => firebase.auth().currentUser.uid;

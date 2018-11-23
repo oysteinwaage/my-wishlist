@@ -11,8 +11,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import ListeVelger from './ListeVelger';
 import { endreHeaderTekst } from '../actions/actions';
-import { fetdhUsers, updateWishlistFor } from '../Api';
-import { markerOnskeSomKjopt, finnPersonMedUid, erInnloggetBrukersUid } from '../utils/util';
+import { fetdhUsers, updateWishOnListWith } from '../Api';
+import { finnPersonMedUid, erInnloggetBrukersUid, myWishlistId } from '../utils/util';
 
 const kjoptOnskeClassname = onske => onske.kjopt ? erInnloggetBrukersUid(onske.kjoptAv) ? 'onskeKjopt kjoptAvDeg' : 'onskeKjopt' : '';
 
@@ -23,9 +23,12 @@ class VenneLister extends Component {
   }
 
   onMarkerOnskeSomKjopt = onske => event => {
-    const { valgtVenn, valgtVennsListe, onUpdateWishlistFor } = this.props;
-
-    onUpdateWishlistFor(valgtVenn.uid, markerOnskeSomKjopt(valgtVennsListe, onske, event.target.checked));
+    const { valgtVenn } = this.props;
+    const newValues = {
+      kjopt: event.target.checked,
+      kjoptAv: event.target.checked ? myWishlistId() : '',
+    };
+    updateWishOnListWith(newValues, onske, valgtVenn.uid);
   }
 
   lenkeEllerKjoptAv(onske) {
@@ -84,7 +87,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
   onHentBrukere: () => dispatch(fetdhUsers()),
-  onUpdateWishlistFor: (uid, newList) => dispatch(updateWishlistFor(uid, newList)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VenneLister);

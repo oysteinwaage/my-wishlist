@@ -15,9 +15,8 @@ import EditIcon from '@material-ui/icons/Edit'
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { fetdhMinOnskeliste, updateMyList } from '../Api';
+import { fetdhMinOnskeliste, addWishToMyList, removeWishFromMyList } from '../Api';
 import { toggleLenkeDialog, endreHeaderTekst } from '../actions/actions';
-import { fjernOnskeFraListe, leggTilNyttOnskeIListe } from '../utils/util';
 import LenkeDialog from './LeggTilLenkeDialog';
 
 class MinListe extends Component {
@@ -31,17 +30,15 @@ class MinListe extends Component {
   }
 
   lagreOnske() {
-    const { mineOnsker } = this.props;
     const { nyttOnskeTekst } = this.state;
     if (nyttOnskeTekst) {
-      updateMyList(leggTilNyttOnskeIListe(mineOnsker, nyttOnskeTekst))
+      addWishToMyList({ onskeTekst: nyttOnskeTekst});
     }
     this.setState({nyttOnskeTekst: ''})
   }
 
   slettOnske(onske) {
-    const { mineOnsker } = this.props;
-    updateMyList(fjernOnskeFraListe(mineOnsker, onske));
+    removeWishFromMyList(onske.key);
   }
 
   endreOnske(onske) {

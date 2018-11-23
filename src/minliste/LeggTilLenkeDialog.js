@@ -6,10 +6,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { updateMyList } from "../Api";
+import { updateLinkOnWishOnMyList } from "../Api";
 import connect from "react-redux/es/connect/connect";
 import { toggleLenkeDialog } from '../actions/actions';
-import { leggTilLenkeTilOnske } from '../utils/util';
 
 class LeggTilLenkeDialog extends Component {
   constructor(props) {
@@ -18,8 +17,8 @@ class LeggTilLenkeDialog extends Component {
   }
 
   lagreLenke = () => {
-    const { mineOnsker, openLenkeDialogOnske, onToggleLenkeDialog } = this.props;
-    updateMyList(leggTilLenkeTilOnske(mineOnsker, this.state.url, openLenkeDialogOnske));
+    const { openLenkeDialogOnske, onToggleLenkeDialog } = this.props;
+    updateLinkOnWishOnMyList(this.state.url, openLenkeDialogOnske.key);
     onToggleLenkeDialog();
     this.setState({url: ''});
   };
@@ -64,7 +63,6 @@ class LeggTilLenkeDialog extends Component {
 }
 
 const mapStateToProps = state => ({
-  mineOnsker: state.innloggetBruker.mineOnsker,
   openLenkeDialog: state.innloggetBruker.openLenkeDialog,
   openLenkeDialogOnske: state.innloggetBruker.openLenkeDialogOnske,
 });
