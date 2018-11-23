@@ -12,7 +12,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import ListeVelger from './ListeVelger';
 import { endreHeaderTekst } from '../actions/actions';
 import { fetdhUsers, updateWishOnListWith } from '../Api';
-import { finnPersonMedUid, erInnloggetBrukersUid, myWishlistId } from '../utils/util';
+import { erInnloggetBrukersUid, myWishlistId, myName } from '../utils/util';
 
 const kjoptOnskeClassname = onske => onske.kjopt ? erInnloggetBrukersUid(onske.kjoptAv) ? 'onskeKjopt kjoptAvDeg' : 'onskeKjopt' : '';
 
@@ -27,14 +27,14 @@ class VenneLister extends Component {
     const newValues = {
       kjopt: event.target.checked,
       kjoptAv: event.target.checked ? myWishlistId() : '',
+      kjoptAvNavn: event.target.checked ? myName() : '',
     };
     updateWishOnListWith(newValues, onske, valgtVenn.uid);
   }
 
   lenkeEllerKjoptAv(onske) {
     if (onske.kjopt) {
-      const kjoper = finnPersonMedUid(onske.kjoptAv, this.props.mineVenner);
-      return 'Tatt av ' + (erInnloggetBrukersUid(kjoper.uid) ? 'deg' : kjoper.navn);
+      return 'Tatt av ' + (erInnloggetBrukersUid(onske.kjoptAv) ? 'deg' : onske.kjoptAvNavn);
     }
     return onske.url && (<a href={onske.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>);
   }

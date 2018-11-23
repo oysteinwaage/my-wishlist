@@ -7,6 +7,7 @@ import Select from '@material-ui/core/Select';
 
 import { fetdhOnskelisteForUid } from '../Api';
 import { setValgtVenn } from '../actions/actions';
+import { myWishlistId } from "../utils/util";
 
 const styles = theme => ({
   root: {
@@ -44,6 +45,8 @@ class ListeVelger extends Component {
 
   render() {
     const { classes, mineVenner } = this.props;
+    // TODO midlertidig fix for å ikke få opp egen liste
+    const venneliste = mineVenner.filter(b => b.uid !== myWishlistId());
     return (
       <div className={classes.root}>
         <FormControl className={classes.formControl}>
@@ -58,7 +61,7 @@ class ListeVelger extends Component {
             }}
           >
             <option value="" />
-            {mineVenner.map(venn => {
+            {venneliste.map(venn => {
               return (<option key={venn.uid} value={venn.uid}>{venn.navn}</option>);
             })}
           </Select>
