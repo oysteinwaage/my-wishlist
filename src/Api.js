@@ -17,11 +17,13 @@ export const removeWishFromMyList = wishId => {
 };
 
 export const updateLinkOnWishOnMyList = (newLink, wishId) => {
-  myWishlistRef().child(wishId).update({ url: newLink});
+  myWishlistRef().child(wishId).update({ url: newLink });
 };
 
 export const updateWishOnListWith = (newValues, wish, listId) => {
-  wishlistRef(listId).child(wish.key).update(Object.assign({}, wish, newValues));
+  const wishKey = wish.key;
+  delete wish.key;
+  wishlistRef(listId).child(wishKey).update(Object.assign({}, wish, newValues));
 };
 
 export const loggInn = (brukernavn, passord) => async dispatch => {
