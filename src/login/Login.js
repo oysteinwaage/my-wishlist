@@ -10,6 +10,7 @@ const initState = {
   username: '',
   password: '',
   name: '',
+  nameMissing: false,
 };
 
 class Login extends Component {
@@ -20,8 +21,12 @@ class Login extends Component {
 
   innsendigKnappTrykket() {
     if (this.props.visOpprettNyBruker) {
-      const suksess = this.props.onRegistrerNyBruker(this.state.username, this.state.password, this.state.name);
-      if (suksess) this.setState(initState);
+      if (this.state.name === '') {
+        this.setState({ nameMissing: true })
+      } else {
+        const suksess = this.props.onRegistrerNyBruker(this.state.username, this.state.password, this.state.name);
+        if (suksess) this.setState(initState);
+      }
     } else {
       this.props.onLoggInn(this.state.username, this.state.password);
     }
@@ -54,7 +59,9 @@ class Login extends Component {
               margin="normal"
               //variant="outlined"
               label="Fyll inn navn"
-              onChange={(event) => this.setState({ name: event.target.value })}
+              required
+              error={this.state.nameMissing}
+              onChange={(event) => this.setState({ name: event.target.value, nameMissing: false })}
             />
           </div>)
           }
