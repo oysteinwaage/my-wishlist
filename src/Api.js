@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
 import { usersRef, auth, wishlistRef, myWishlistRef } from "./config/firebase";
-import { brukerLoggetInn, mottaMinOnskeliste, mottaBrukere, mottaValgtVennsListe } from "./actions/actions";
+import { brukerLoggetInn, mottaMinOnskeliste, mottaBrukere, mottaValgtVennsListe, resetAllData } from "./actions/actions";
 import { myWishlistId } from './utils/util';
 
 const mapTolist = res => res.val() ?
@@ -71,3 +71,12 @@ export const fetdhUsers = () => async dispatch => {
     dispatch(mottaBrukere(mapTolist(snapshot)));
   });
 };
+
+export const logOut = () => async dispatch => {
+  auth.signOut().then(function () {
+    dispatch(push('/'));
+    dispatch(resetAllData());
+  }).catch(error => {
+    alert(error);
+  })
+}

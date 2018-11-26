@@ -61,3 +61,10 @@ export function setValgtVenn(venn) {
     venn,
   };
 }
+
+export const RESET_ALL_DATA = 'RESET_ALL_DATA';
+export function resetAllData() {
+  return {
+    type: RESET_ALL_DATA,
+  };
+}

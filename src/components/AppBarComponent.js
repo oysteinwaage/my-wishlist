@@ -8,14 +8,16 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import GiftIcon from '@material-ui/icons/CardGiftcard';
+import Exit from '@material-ui/icons/ExitToApp';
 import ListeIcon from '@material-ui/icons/FormatListBulleted';
-// import Drawer from '@material-ui/core/Drawer';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+
+import { logOut } from '../Api';
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -32,6 +34,9 @@ class AppBarComponent extends Component {
         break;
       case 'minListe':
         this.props.onAapneMinOnskelisteSide();
+        break;
+      case 'loggUt':
+        this.props.onLogOut();
         break;
       default:
       //doNothing
@@ -64,14 +69,22 @@ class AppBarComponent extends Component {
                 </ListItemIcon>
                 <ListItemText primary='Min ønskeliste' />
               </ListItem>
+              <Divider />
               <ListItem button onClick={() => this.menyValgTrykket('venneLister')} key='venneLister'>
                 <ListItemIcon>
                   <div><GiftIcon /></div>
                 </ListItemIcon>
                 <ListItemText primary='Venners lister' />
               </ListItem>
+              <Divider />
+              <ListItem button onClick={() => this.menyValgTrykket('loggUt')} key='loggUt'>
+                <ListItemIcon>
+                  <div><Exit /></div>
+                </ListItemIcon>
+                <ListItemText primary='Logg ut' />
+              </ListItem>
+              <Divider />
             </List>
-            <Divider />
           </div>
         </SwipeableDrawer>
       </AppBar>
@@ -103,6 +116,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onAapneVennersListerSide: () => dispatch(push('vennelister')),
   onAapneMinOnskelisteSide: () => dispatch(push('minliste')),
+  onLogOut: () => dispatch(logOut()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AppBarComponent));

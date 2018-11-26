@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import { ENDRE_HEADER_TEKST, TOGGLE_VIS_OPPRETT_BRUKER, MOTTA_BRUKERE } from '../actions/actions';
+import { ENDRE_HEADER_TEKST, TOGGLE_VIS_OPPRETT_BRUKER, MOTTA_BRUKERE, RESET_ALL_DATA } from '../actions/actions';
 
 export default function config(state = initialState.config, action) {
   switch (action.type) {
@@ -15,6 +15,8 @@ export default function config(state = initialState.config, action) {
       return Object.assign({}, state, {
         brukere: action.brukere,
       });
+    case RESET_ALL_DATA:
+      return initialState.config;
     default:
       return state;
   }

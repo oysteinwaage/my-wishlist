@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import { MOTTA_BRUKERE, MOTTA_VALGT_VENNS_LISTE, SETTE_VALGT_VENN } from '../actions/actions';
+import { MOTTA_BRUKERE, MOTTA_VALGT_VENNS_LISTE, SETTE_VALGT_VENN, RESET_ALL_DATA } from '../actions/actions';
 
 export default function vennersLister(state = initialState.vennersLister, action) {
   switch (action.type) {
@@ -15,6 +15,8 @@ export default function vennersLister(state = initialState.vennersLister, action
       return Object.assign({}, state, {
         valgtVenn: action.venn,
       });
+    case RESET_ALL_DATA:
+      return initialState.vennersLister;
     default:
       return state;
   }

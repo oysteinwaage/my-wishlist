@@ -1,7 +1,7 @@
 export default {
   innloggetBruker: {
     email: '',
-    navn: 'Fornavn Etternavn',
+    navn: '',
     mineOnsker: [],
     openLenkeDialog: false,
   },
