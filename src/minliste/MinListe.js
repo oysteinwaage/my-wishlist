@@ -65,7 +65,7 @@ class MinListe extends Component {
             primary={value.onskeTekst}
             secondary={value.url && <a href={value.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
           />
-          <ListItemSecondaryAction>
+          <ListItemSecondaryAction className='wishIconMenu'>
             <Tooltip title='Legg til lenke'>
               <IconButton aria-label="AddLink" onClick={() => onToggleLenkeDialog(value)}>
                 <WebLinkIcon />
@@ -113,7 +113,7 @@ class MinListe extends Component {
         </div>
 
         <div>
-          <Grid item xs={12} md={6}>
+          <Grid>
             <h2>Min ønskeliste</h2>
             <div className="minOnskeliste">
               <List dense={false}>
