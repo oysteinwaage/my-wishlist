@@ -28,6 +28,14 @@
 .onskeKjopt .onskeKjoptTekst {
   font-style: italic;
 }
+.minListe .addNewWish {
+  display: flex;
+  justify-content: center;
+}
+.minListe .addNewWish .addNewWishButton {
+  align-self: center;
+  margin-left: 10px;
+}
 body {
   min-height: 100vh;
   margin: 0;

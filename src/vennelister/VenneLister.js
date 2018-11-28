@@ -11,7 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import ListeVelger from './ListeVelger';
 import { endreHeaderTekst } from '../actions/actions';
-import { fetdhUsers, updateWishOnListWith, fetchListsIAmAllowedToView } from '../Api';
+import { updateWishOnListWith, fetchListsIAmAllowedToView } from '../Api';
 import { erInnloggetBrukersUid, myWishlistId, myName } from '../utils/util';
 
 const kjoptOnskeClassname = onske => onske.kjopt ? erInnloggetBrukersUid(onske.kjoptAv) ? 'onskeKjopt kjoptAvDeg' : 'onskeKjopt' : '';

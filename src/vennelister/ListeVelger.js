@@ -12,6 +12,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -45,11 +46,10 @@ class ListeVelger extends Component {
   render() {
     const { classes, allUsers, allowedListsForMe } = this.props;
     const venneliste = allUsers.filter(user => allowedListsForMe.includes(user.uid));
-    console.log('venneliste: ', venneliste);
     return (
       <div className={classes.root}>
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="navn-native-simple">Velg venn</InputLabel>
+          <InputLabel htmlFor="navn-native-simple">Velg ønskeliste</InputLabel>
           <Select
             native
             value={this.state.valgtVennUid}

@@ -91,23 +91,23 @@ class MinListe extends Component {
   render() {
     const { innloggetBrukerNavn, mineOnsker } = this.props;
     return (
-      <div className="MinListe">
+      <div className="minListe">
         <p>
           Velkommen {innloggetBrukerNavn}
         </p>
         <AddAllowedFriends />
-        <div className="leggTilNyttOnske">
+        <div className="addNewWish">
           <TextField
-            id="nyttOnskeFelt"
+            id="addNewWishField"
             label="Legg til nytt ønske"
-            className="nyttOnskeFelt"
+            className="addNewWishField"
             value={this.state.nyttOnskeTekst}
             onChange={(e) => this.setState({ nyttOnskeTekst: e.target.value })}
             margin="normal"
             variant="outlined"
             onKeyDown={this.onKeyPressed}
           />
-          <Button className="leggTilNyttOnskeKnapp" onClick={() => this.lagreOnske()} variant="fab" color="primary" aria-label="Add">
+          <Button className="addNewWishButton" onClick={() => this.lagreOnske()} variant="fab" color="primary" aria-label="Add">
             <AddIcon />
           </Button>
         </div>
