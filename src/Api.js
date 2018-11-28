@@ -27,7 +27,12 @@ export const removeWishFromMyList = wishId => {
 };
 
 export const updateLinkOnWishOnMyList = (newLink, wishId) => {
-  myWishlistRef().child(wishId).update({ url: newLink });
+  const wishRef = myWishlistRef().child(wishId);
+  if (newLink !== '' && !newLink.startsWith('http')) {
+    wishRef.update({ url: 'http://' + newLink })
+  } else {
+    wishRef.update({ url: newLink });
+  }
 };
 
 export const updateWishOnListWith = (newValues, wish, listId) => {
