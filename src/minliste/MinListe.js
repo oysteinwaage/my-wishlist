@@ -15,26 +15,29 @@ import EditIcon from '@material-ui/icons/Edit'
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { fetdhMinOnskeliste, addWishToMyList, removeWishFromMyList } from '../Api';
+import { fetdhMinOnskeliste, addWishToMyList, removeWishFromMyList, fetchViewersToMyList } from '../Api';
 import { toggleLenkeDialog, endreHeaderTekst } from '../actions/actions';
 import LenkeDialog from './LeggTilLenkeDialog';
+import AddAllowedFriends from './AddViewersToMyListComponent';
 
 class MinListe extends Component {
   constructor(props) {
     super(props);
-    this.state = { nyttOnskeTekst: ''}
+    this.state = { nyttOnskeTekst: '' }
   }
+
   componentDidMount() {
     this.props.onEndreHeaderTekst('Rediger ønskeliste');
     this.props.onAbonnerPaaMinOnskeliste();
+    this.props.onSubscribeToMyAllowedViewers();
   }
 
   lagreOnske() {
     const { nyttOnskeTekst } = this.state;
     if (nyttOnskeTekst) {
-      addWishToMyList({ onskeTekst: nyttOnskeTekst});
+      addWishToMyList({ onskeTekst: nyttOnskeTekst });
     }
-    this.setState({nyttOnskeTekst: ''})
+    this.setState({ nyttOnskeTekst: '' })
   }
 
   slettOnske(onske) {
@@ -92,13 +95,14 @@ class MinListe extends Component {
         <p>
           Velkommen {innloggetBrukerNavn}
         </p>
+        <AddAllowedFriends />
         <div className="leggTilNyttOnske">
           <TextField
             id="nyttOnskeFelt"
             label="Legg til nytt ønske"
             className="nyttOnskeFelt"
             value={this.state.nyttOnskeTekst}
-            onChange={(e) => this.setState({nyttOnskeTekst: e.target.value})}
+            onChange={(e) => this.setState({ nyttOnskeTekst: e.target.value })}
             margin="normal"
             variant="outlined"
             onKeyDown={this.onKeyPressed}
@@ -132,6 +136,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onAbonnerPaaMinOnskeliste: () => dispatch(fetdhMinOnskeliste()),
+  onSubscribeToMyAllowedViewers: () => dispatch(fetchViewersToMyList()),
   onToggleLenkeDialog: (index) => dispatch(toggleLenkeDialog(index)),
   onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
 });

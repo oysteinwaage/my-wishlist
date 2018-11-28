@@ -1,11 +1,4 @@
-export const BRUKER_LOGGET_INN = 'BRUKER_LOGGET_INN';
-export function brukerLoggetInn(user) {
-  return {
-    type: BRUKER_LOGGET_INN,
-    user,
-  };
-}
-
+// Min ønskeliste
 export const MOTTA_MIN_ONSKELISTE = 'MOTTA_MIN_ONSKELISTE';
 export function mottaMinOnskeliste(nyListe) {
   return {
@@ -22,14 +15,15 @@ export function toggleLenkeDialog(index) {
   };
 }
 
-export const ENDRE_HEADER_TEKST = 'ENDRE_HEADER_TEKST';
-export function endreHeaderTekst(nyTekst) {
+export const UPDATE_ALLOWED_VIEWERS = 'UPDATE_ALLOWED_VIEWERS';
+export function updateAllowedViewers(viewers) {
   return {
-    type: ENDRE_HEADER_TEKST,
-    nyTekst,
+    type: UPDATE_ALLOWED_VIEWERS,
+    viewers,
   };
 }
 
+// Brukere
 export const TOGGLE_VIS_OPPRETT_BRUKER = 'TOGGLE_VIS_OPPRETT_BRUKER';
 export function toggleVisOpprettBruker() {
   return {
@@ -42,6 +36,14 @@ export function mottaBrukere(brukere) {
   return {
     type: MOTTA_BRUKERE,
     brukere
+  };
+}
+
+export const BRUKER_LOGGET_INN = 'BRUKER_LOGGET_INN';
+export function brukerLoggetInn(user) {
+  return {
+    type: BRUKER_LOGGET_INN,
+    user,
   };
 }
 
@@ -62,9 +64,27 @@ export function setValgtVenn(venn) {
   };
 }
 
+export const RECEIVE_MY_FRIEND_LISTS = 'RECEIVE_MY_FRIEND_LISTS';
+export function receiveMyFriendLists(lists) {
+  return {
+    type: RECEIVE_MY_FRIEND_LISTS,
+    lists,
+  };
+}
+
+// Generelt
 export const RESET_ALL_DATA = 'RESET_ALL_DATA';
 export function resetAllData() {
   return {
     type: RESET_ALL_DATA,
   };
 }
+
+export const ENDRE_HEADER_TEKST = 'ENDRE_HEADER_TEKST';
+export function endreHeaderTekst(nyTekst) {
+  return {
+    type: ENDRE_HEADER_TEKST,
+    nyTekst,
+  };
+}
+

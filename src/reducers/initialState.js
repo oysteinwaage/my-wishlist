@@ -4,6 +4,7 @@ export default {
     navn: '',
     mineOnsker: [],
     openLenkeDialog: false,
+    allowedViewers: [],
   },
   brukere: {},
   config: {
@@ -12,7 +13,7 @@ export default {
     brukere: [],
   },
   vennersLister: {
-    venner: [],
+    allowedListsForMe: [],
     valgtVennsListe: [],
     valgtVenn: {},
   }

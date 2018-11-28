@@ -16,6 +16,11 @@ export const usersRef = databaseRef.child('users');
 export const wishlistRef = listId => db.ref('wishlists/' + listId);
 export const myWishlistRef = () => wishlistRef(myUid());
 
+// AllowedUsers
+export const allowedViewersRef = listId => db.ref('allowedViewers/' + listId);
+export const myAllowedViewersRef = () => db.ref('allowedViewers/' + myUid());
+export const allowedViewsRef = databaseRef.child('allowedViewers');
 
+// Authentication/signed in user
 export const auth = firebase.auth();
 export const myUid = () => firebase.auth().currentUser.uid;

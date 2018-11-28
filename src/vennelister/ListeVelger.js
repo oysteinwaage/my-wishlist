@@ -7,7 +7,6 @@ import Select from '@material-ui/core/Select';
 
 import { fetdhOnskelisteForUid } from '../Api';
 import { setValgtVenn } from '../actions/actions';
-import { myWishlistId } from "../utils/util";
 
 const styles = theme => ({
   root: {
@@ -40,13 +39,13 @@ class ListeVelger extends Component {
   }
 
   finnValgtVennObjekt = (valgtUid) => {
-    return this.props.mineVenner.filter(x => x.uid === valgtUid)
+    return this.props.allUsers.filter(x => x.uid === valgtUid)
   }
 
   render() {
-    const { classes, mineVenner } = this.props;
-    // TODO midlertidig fix for å ikke få opp egen liste
-    const venneliste = mineVenner.filter(b => b.uid !== myWishlistId());
+    const { classes, allUsers, allowedListsForMe } = this.props;
+    const venneliste = allUsers.filter(user => allowedListsForMe.includes(user.uid));
+    console.log('venneliste: ', venneliste);
     return (
       <div className={classes.root}>
         <FormControl className={classes.formControl}>
@@ -72,7 +71,8 @@ class ListeVelger extends Component {
 }
 
 const mapStateToProps = state => ({
-  mineVenner: state.vennersLister.venner,
+  allUsers: state.config.brukere,
+  allowedListsForMe: state.vennersLister.allowedListsForMe,
 });
 
 const mapDispatchToProps = dispatch => ({

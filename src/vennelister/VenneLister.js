@@ -11,15 +11,16 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import ListeVelger from './ListeVelger';
 import { endreHeaderTekst } from '../actions/actions';
-import { fetdhUsers, updateWishOnListWith } from '../Api';
+import { fetdhUsers, updateWishOnListWith, fetchListsIAmAllowedToView } from '../Api';
 import { erInnloggetBrukersUid, myWishlistId, myName } from '../utils/util';
 
 const kjoptOnskeClassname = onske => onske.kjopt ? erInnloggetBrukersUid(onske.kjoptAv) ? 'onskeKjopt kjoptAvDeg' : 'onskeKjopt' : '';
 
 class VenneLister extends Component {
   componentDidMount() {
-    this.props.onEndreHeaderTekst('Venners lister');
-    this.props.onHentBrukere();
+    const {onEndreHeaderTekst, onFetchListsICanView } = this.props;
+    onEndreHeaderTekst('Venners lister');
+    onFetchListsICanView();
   }
 
   onMarkerOnskeSomKjopt = onske => event => {
@@ -80,13 +81,12 @@ class VenneLister extends Component {
 
 const mapStateToProps = state => ({
   valgtVenn: state.vennersLister.valgtVenn,
-  mineVenner: state.vennersLister.venner,
   valgtVennsListe: state.vennersLister.valgtVennsListe || [],
 });
 
 const mapDispatchToProps = dispatch => ({
   onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
-  onHentBrukere: () => dispatch(fetdhUsers()),
+  onFetchListsICanView: () => dispatch(fetchListsIAmAllowedToView()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VenneLister);

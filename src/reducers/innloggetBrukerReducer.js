@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import { BRUKER_LOGGET_INN, MOTTA_MIN_ONSKELISTE, RESET_ALL_DATA, TOGGLE_LENKE_DIALOG } from '../actions/actions';
+import { BRUKER_LOGGET_INN, MOTTA_MIN_ONSKELISTE, RESET_ALL_DATA, TOGGLE_LENKE_DIALOG, UPDATE_ALLOWED_VIEWERS } from '../actions/actions';
 
 export default function innloggetBruker(state = initialState.innloggetBruker, action) {
   switch (action.type) {
@@ -16,6 +16,10 @@ export default function innloggetBruker(state = initialState.innloggetBruker, ac
       return Object.assign({}, state, {
         openLenkeDialog: !state.openLenkeDialog,
         openLenkeDialogOnske: action.index,
+      });
+    case UPDATE_ALLOWED_VIEWERS:
+      return Object.assign({}, state, {
+        allowedViewers: action.viewers || [],
       });
     case RESET_ALL_DATA:
       return initialState.innloggetBruker;
