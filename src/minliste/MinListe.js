@@ -62,6 +62,7 @@ class MinListe extends Component {
       <div key={value.onskeTekst + mineOnsker.indexOf(value)}>
         <ListItem>
           <ListItemText
+            className='wishText'
             primary={value.onskeTekst}
             secondary={value.url && <a href={value.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
           />

@@ -39,6 +39,14 @@
   align-self: center;
   margin-left: 10px;
 }
+.minListe .minOnskeliste .wishText {
+  max-width: 80%;
+}
+@media only screen and (max-width: 400px) {
+  .minListe .minOnskeliste .wishText {
+    max-width: 60%;
+  }
+}
 body {
   min-height: 100vh;
   margin: 0;
