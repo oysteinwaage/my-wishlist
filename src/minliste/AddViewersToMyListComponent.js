@@ -16,6 +16,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
 import { addViewersToMyList } from '../Api';
+import { myUid } from "../config/firebase";
 
 function NoOptionsMessage(props) {
   return (
@@ -132,10 +133,12 @@ class AddViewersToMyListComponent extends Component {
   render() {
     const { classes, theme, alleBrukere, myAllowedViewers } = this.props;
 
-    const people = alleBrukere.map(b => ({
-      value: b.uid,
-      label: b.navn,
-    }));
+    const people = alleBrukere
+      .filter(user => user.uid !== myUid())
+      .map(b => ({
+        value: b.uid,
+        label: b.navn,
+      }));
 
     const selectStyles = {
       input: base => ({
