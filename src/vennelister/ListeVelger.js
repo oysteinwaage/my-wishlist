@@ -45,7 +45,9 @@ class ListeVelger extends Component {
 
   render() {
     const { classes, allUsers, allowedListsForMe } = this.props;
-    const venneliste = allUsers.filter(user => allowedListsForMe.includes(user.uid));
+    const venneliste = allUsers
+      .filter(user => allowedListsForMe.includes(user.uid))
+      .sort((a, b) => a.navn.localeCompare(b.navn));
     return (
       <div className={classes.root}>
         <FormControl className={classes.formControl}>

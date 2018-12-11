@@ -10,7 +10,7 @@ const databaseRef = firebase.database().ref();
 export const db = firebase.database();
 
 // Users
-export const usersRef = databaseRef.child('users');
+export const usersRef = db.ref('users');
 
 // Wishlist
 export const wishlistRef = listId => db.ref('wishlists/' + listId);

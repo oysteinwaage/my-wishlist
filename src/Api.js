@@ -58,13 +58,13 @@ ALLOWED VIEWERS
  */
 export const addViewersToMyList = (viewers) => {
   myAllowedViewersRef().set(viewers);
-  // myWishlistRef().child('allowedViewers').set(viewers);
 };
 
 export const fetchViewersToMyList = () => async dispatch => {
-  myAllowedViewersRef().on('value', res => {
-    dispatch(updateAllowedViewers(res.val()));
-  });
+  myAllowedViewersRef()
+    .on('value', res => {
+      dispatch(updateAllowedViewers(res.val().sort((a, b) => a.label.localeCompare(b.label))));
+    });
 };
 
 export const fetchListsIAmAllowedToView = () => async dispatch => {
@@ -96,7 +96,7 @@ export const loggInn = (brukernavn, passord) => async dispatch => {
 
 export const fetdhUsers = () => async dispatch => {
   usersRef.once('value', snapshot => {
-    dispatch(mottaBrukere(mapTolist(snapshot)));
+    dispatch(mottaBrukere(mapTolist(snapshot).sort((a, b) => a.navn.localeCompare(b.navn))));
   });
 };
 
