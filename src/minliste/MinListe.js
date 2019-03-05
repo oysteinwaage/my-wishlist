@@ -44,12 +44,6 @@ class MinListe extends Component {
     removeWishFromMyList(onske.key);
   }
 
-  endreOnske(onske) {
-    //const { mineOnsker } = this.props;
-    // updateMyList(fjernOnskeFraListe(mineOnsker, onske));
-    // TODO fikse endring. Men hvordan? popoup-input? rad blir plutselig editerbar?
-  }
-
   onKeyPressed = event => {
     if (event.keyCode === 13) {
       this.lagreOnske();
@@ -67,13 +61,8 @@ class MinListe extends Component {
             secondary={value.url && <a href={value.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
           />
           <ListItemSecondaryAction className='wishIconMenu'>
-            <Tooltip title='Legg til lenke'>
-              <IconButton aria-label="AddLink" onClick={() => onToggleLenkeDialog(value)}>
-                <WebLinkIcon />
-              </IconButton>
-            </Tooltip>
             <Tooltip title='Endre ønske'>
-              <IconButton aria-label="Edit" onClick={() => this.endreOnske(value)}>
+              <IconButton aria-label="Edit" onClick={() => onToggleLenkeDialog(value)}>
                 <EditIcon />
               </IconButton>
             </Tooltip>

@@ -35,6 +35,11 @@ export const updateLinkOnWishOnMyList = (newLink, wishId) => {
   }
 };
 
+export const updateWishTextOnMyList = (newText, wishId) => {
+  const wishRef = myWishlistRef().child(wishId);
+  wishRef.update({ onskeTekst: newText });
+};
+
 export const updateWishOnListWith = (newValues, wish, listId) => {
   const wishKey = wish.key;
   delete wish.key;
@@ -63,7 +68,7 @@ export const addViewersToMyList = (viewers) => {
 export const fetchViewersToMyList = () => async dispatch => {
   myAllowedViewersRef()
     .on('value', res => {
-      dispatch(updateAllowedViewers(res.val().sort((a, b) => a.label.localeCompare(b.label))));
+      dispatch(updateAllowedViewers(res.val() && res.val().sort((a, b) => a.label.localeCompare(b.label))));
     });
 };
 

@@ -6,25 +6,50 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { updateLinkOnWishOnMyList } from "../Api";
+import { updateLinkOnWishOnMyList, updateWishTextOnMyList } from "../Api";
 import connect from "react-redux/es/connect/connect";
 import { toggleLenkeDialog } from '../actions/actions';
+
+const initState = { url: '', text: '', urlChanged: false, textChanged: false };
 
 class LeggTilLenkeDialog extends Component {
   constructor(props) {
     super(props);
-    this.state = { url: '' };
+    this.state = initState;
   }
 
-  lagreLenke = () => {
-    const { openLenkeDialogOnske, onToggleLenkeDialog } = this.props;
-    updateLinkOnWishOnMyList(this.state.url, openLenkeDialogOnske.key);
+  resettState = () => {
+    this.setState(initState)
+  }
+
+  cancel = () => {
+    const { onToggleLenkeDialog } = this.props;
     onToggleLenkeDialog();
-    this.setState({url: ''});
+    this.resettState();
+  }
+
+  onKeyPressed = event => {
+    if (event.keyCode === 13) {
+      this.saveChanges();
+    }
+  };
+
+  saveChanges = () => {
+    const { openLenkeDialogOnske, onToggleLenkeDialog } = this.props;
+    if (this.state.urlChanged) {
+      updateLinkOnWishOnMyList(this.state.url, openLenkeDialogOnske.key);
+    }
+    if (this.state.textChanged) {
+      updateWishTextOnMyList(this.state.text, openLenkeDialogOnske.key);
+    }
+    onToggleLenkeDialog();
+    this.resettState();
   };
 
   render() {
-    const { openLenkeDialog, onToggleLenkeDialog } = this.props;
+    const { openLenkeDialog, onToggleLenkeDialog, openLenkeDialogOnske } = this.props;
+    const defaultUrl = openLenkeDialogOnske && openLenkeDialogOnske.url;
+    const defaultText = openLenkeDialogOnske && openLenkeDialogOnske.onskeTekst;
     return (
       <div>
         <Dialog
@@ -44,15 +69,32 @@ class LeggTilLenkeDialog extends Component {
               id="link"
               label="http://www.eksempel.com"
               type="url"
+              value={this.state.url || (!this.state.urlChanged && defaultUrl) || ''}
               fullWidth
-              onChange={(e) => this.setState({ url: e.target.value })}
+              onChange={(e) => {
+                this.setState({ url: e.target.value, urlChanged: true })
+              }}
+              onKeyDown={this.onKeyPressed}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="text"
+              label='Endre ønske tekst'
+              value={this.state.text || defaultText}
+              type="text"
+              fullWidth
+              onChange={(e) => {
+                this.setState({ text: e.target.value, textChanged: true })
+              }}
+              onKeyDown={this.onKeyPressed}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={onToggleLenkeDialog} color="primary">
+            <Button onClick={() => this.cancel()} color="primary">
               Avbryt
             </Button>
-            <Button onClick={() => this.lagreLenke()} color="primary">
+            <Button onClick={() => this.saveChanges()} color="primary">
               Lagre
             </Button>
           </DialogActions>
