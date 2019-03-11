@@ -10,7 +10,11 @@ const initState = {
   username: '',
   password: '',
   name: '',
+  firstName: '',
+  lastName: '',
   nameMissing: false,
+  firstNameMissing: false,
+  lastNameMissing: false,
 };
 
 class Login extends Component {
@@ -21,10 +25,12 @@ class Login extends Component {
 
   innsendigKnappTrykket() {
     if (this.props.visOpprettNyBruker) {
-      if (this.state.name === '') {
-        this.setState({ nameMissing: true })
+      let firstNameMissing = this.state.firstName === '';
+      let lastNameMissing = this.state.lastName === '';
+      if (firstNameMissing || lastNameMissing) {
+        this.setState({ firstNameMissing: firstNameMissing, lastNameMissing: lastNameMissing })
       } else {
-        const suksess = this.props.onRegistrerNyBruker(this.state.username, this.state.password, this.state.name);
+        const suksess = this.props.onRegistrerNyBruker(this.state.username, this.state.password, this.state.firstName, this.state.lastName);
         if (suksess) this.setState(initState);
       }
     } else {
@@ -47,21 +53,30 @@ class Login extends Component {
       <div>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Ønskelisten er her!! God Jul :D
-          </p>
         </header>
         <div>
           {visOpprettNyBruker &&
           (<div>
             <TextField
-              id="navnFelt"
+              id="firstNameField"
+              className="nameTextField"
               margin="normal"
               //variant="outlined"
-              label="Fyll inn navn"
+              label="Fyll inn fornavn"
               required
-              error={this.state.nameMissing}
-              onChange={(event) => this.setState({ name: event.target.value, nameMissing: false })}
+              error={this.state.firstNameMissing}
+              onChange={(event) => this.setState({ firstName: event.target.value, firstNameMissing: false })}
+            />
+            <br />
+            <TextField
+              id="lastNameField"
+              className="nameTextField"
+              margin="normal"
+              //variant="outlined"
+              label="Fyll inn etternavn"
+              required
+              error={this.state.lastNameMissing}
+              onChange={(event) => this.setState({ lastName: event.target.value, lastNameMissing: false })}
             />
           </div>)
           }
@@ -103,7 +118,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onLoggInn: (brukernavn, passord) => dispatch(loggInn(brukernavn, passord)),
-  onRegistrerNyBruker: (email, passord, name) => dispatch(opprettNyBruker(email, passord, name)),
+  onRegistrerNyBruker: (email, passord, firstName, lastName) => dispatch(opprettNyBruker(email, passord, firstName, lastName)),
   onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
   onToggleVisOpprettBruker: () => dispatch(toggleVisOpprettBruker()),
 });

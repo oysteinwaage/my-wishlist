@@ -114,12 +114,13 @@ export const logOut = () => async dispatch => {
   })
 }
 
-export const opprettNyBruker = (brukernavn, passord, navn) => async dispatch => {
+export const opprettNyBruker = (brukernavn, passord, firstName, lastName) => async dispatch => {
+  const navn = firstName + " " + lastName;
   auth.createUserWithEmailAndPassword(brukernavn, passord)
     .then(() => {
       auth.currentUser.updateProfile({ displayName: navn, photoURL: null })
         .then(() => {
-          usersRef.push().set({ navn, email: brukernavn, uid: auth.currentUser.uid });
+          usersRef.push().set({ navn, firstName, lastName, email: brukernavn, uid: auth.currentUser.uid });
           dispatch(brukerLoggetInn(auth.currentUser));
           dispatch(push('/minliste'));
           // alert('Gratulerer du har opprettet bruker. Nå kan du logge inn!')
