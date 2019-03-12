@@ -59,9 +59,8 @@ class Login extends Component {
           (<div>
             <TextField
               id="firstNameField"
-              className="nameTextField"
+              className="inputTextField"
               margin="normal"
-              //variant="outlined"
               label="Fyll inn fornavn"
               required
               error={this.state.firstNameMissing}
@@ -70,9 +69,8 @@ class Login extends Component {
             <br />
             <TextField
               id="lastNameField"
-              className="nameTextField"
+              className="inputTextField"
               margin="normal"
-              //variant="outlined"
               label="Fyll inn etternavn"
               required
               error={this.state.lastNameMissing}
@@ -83,14 +81,15 @@ class Login extends Component {
 
           <TextField
             id="emailFelt"
+            className="inputTextField"
             margin="normal"
-            //variant="outlined"
             label="Fyll inn email-adresse"
             onChange={(event) => this.setState({ username: event.target.value })}
           />
           <br />
           <TextField
             id="passordFelt"
+            className="inputTextField"
             type="password"
             label="Fyll inn passord"
             onChange={(event) => this.setState({ password: event.target.value })}
