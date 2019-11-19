@@ -7,7 +7,8 @@ import {
   mottaValgtVennsListe,
   receiveMyFriendLists,
   resetAllData,
-  updateAllowedViewers
+  updateAllowedViewers,
+  resettPassordMailSendt
 } from "./actions/actions";
 
 const mapTolist = res => res.val() ?
@@ -76,7 +77,7 @@ export const fetchListsIAmAllowedToView = () => async dispatch => {
   allowedViewsRef.once('value', res => {
     const allLists = res.val();
     const myLists = allLists ?
-      Object.keys(allLists).filter(groupId => allLists[groupId].find(member => member.value === myUid())).map(k => {
+      Object.keys(allLists).filter(groupId => allLists[groupId].find(member => member && member.value === myUid())).map(k => {
         return k;
       }) : [];
     dispatch(receiveMyFriendLists(myLists));
@@ -97,6 +98,14 @@ export const loggInn = (brukernavn, passord) => async dispatch => {
     .catch(function (error) {
       alert(error);
     });
+};
+
+export const resetPassord = (mail) => async dispatch =>{
+  auth.sendPasswordResetEmail(mail)
+      .then(() => dispatch(resettPassordMailSendt(
+          `Link til resetting av passord er sendt til din email: ${mail}. Sjekk i spam-mappen din også, den kan fort ende der`
+      )))
+      .catch( () => dispatch(resettPassordMailSendt('Noe gikk feil! Sjekk at du har skrevet inn riktig mail og prøv igjen')))
 };
 
 export const fetdhUsers = () => async dispatch => {

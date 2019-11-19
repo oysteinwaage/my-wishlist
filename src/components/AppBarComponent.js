@@ -46,7 +46,7 @@ class AppBarComponent extends Component {
 
   render() {
     const { classes, headerTekst } = this.props;
-    const visHamburgerMeny = headerTekst !== 'Innlogging' && headerTekst !== 'Opprett ny bruker';
+    const visHamburgerMeny = headerTekst !== 'Innlogging' && headerTekst !== 'Opprett ny bruker' && headerTekst !== 'Resett passord';
     return (
       <AppBar position="static">
         <Toolbar>

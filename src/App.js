@@ -7,8 +7,6 @@ import Vennelister from './vennelister/VenneLister';
 import AppBar from './components/AppBarComponent';
 
 class App extends Component {
-  componentDidMount() {
-  }
 
   render() {
     return (

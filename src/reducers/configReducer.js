@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import { ENDRE_HEADER_TEKST, TOGGLE_VIS_OPPRETT_BRUKER, MOTTA_BRUKERE, RESET_ALL_DATA } from '../actions/actions';
+import { ENDRE_HEADER_TEKST, TOGGLE_VIS_OPPRETT_BRUKER, MOTTA_BRUKERE, RESET_ALL_DATA, RESETT_PASSORD_MAIL_SENDT } from '../actions/actions';
 
 export default function config(state = initialState.config, action) {
   switch (action.type) {
@@ -15,6 +15,11 @@ export default function config(state = initialState.config, action) {
       return Object.assign({}, state, {
         brukere: action.brukere,
       });
+    case RESETT_PASSORD_MAIL_SENDT:
+      return {
+        ...state,
+        infoResettMailSendt: action.infoText,
+      };
     case RESET_ALL_DATA:
       return initialState.config;
     default:

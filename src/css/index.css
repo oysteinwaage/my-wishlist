@@ -76,3 +76,8 @@ html,
   background: #f4f4f4;
   flex-grow: 2;
 }
+.glemt-passord-lenke {
+  text-decoration: underline;
+  cursor: pointer;
+  color: dodgerblue;
+}

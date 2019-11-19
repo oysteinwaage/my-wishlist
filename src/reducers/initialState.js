@@ -11,6 +11,7 @@ export default {
     headerTekst: 'Innlogging',
     visOpprettNyBruker: false,
     brukere: [],
+    infoResettMailSendt: '',
   },
   vennersLister: {
     allowedListsForMe: [],

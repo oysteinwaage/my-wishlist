@@ -88,3 +88,11 @@ export function endreHeaderTekst(nyTekst) {
   };
 }
 
+export const RESETT_PASSORD_MAIL_SENDT = 'RESETT_PASSORD_MAIL_SENDT';
+export function resettPassordMailSendt(infoText) {
+  return {
+    type: RESETT_PASSORD_MAIL_SENDT,
+      infoText,
+  };
+}
+
