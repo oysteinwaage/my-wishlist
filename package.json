@@ -1,6 +1,11 @@
 {
   "name": "my-wishlist",
   "version": "0.1.0",
+  "engines": {
+    "node": "10.16.3",
+    "npm": "6.9.0",
+    "yarn": "1.19.1"
+  },
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.5.1",
