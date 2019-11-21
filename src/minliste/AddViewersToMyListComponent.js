@@ -134,7 +134,7 @@ class AddViewersToMyListComponent extends Component {
     const { classes, theme, alleBrukere, myAllowedViewers } = this.props;
 
     const people = alleBrukere
-      .filter(user => user.uid !== myUid())
+      .filter(user => user.uid !== myUid() && !user.invisible)
       .map(b => ({
         value: b.uid,
         label: b.navn,
