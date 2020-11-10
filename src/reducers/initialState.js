@@ -4,6 +4,7 @@ export default {
     navn: '',
     mineOnsker: [],
     openLenkeDialog: false,
+    openLenkeDialogOnske: {},
     allowedViewers: [],
   },
   brukere: {},

@@ -45,7 +45,7 @@
 }
 .minListe .addNewWish .addNewWishButton {
   align-self: center;
-  margin-left: 10px;
+  background-color: rgba(0, 190, 7, 0.54);
 }
 .minListe .minOnskeliste .wishText {
   max-width: 80%;

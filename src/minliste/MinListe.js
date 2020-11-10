@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
-import WebLinkIcon from '@material-ui/icons/Link';
 import EditIcon from '@material-ui/icons/Edit'
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { fetdhMinOnskeliste, addWishToMyList, removeWishFromMyList, fetchViewersToMyList } from '../Api';
+import { fetdhMinOnskeliste, removeWishFromMyList, fetchViewersToMyList } from '../Api';
 import { toggleLenkeDialog, endreHeaderTekst } from '../actions/actions';
-import LenkeDialog from './LeggTilLenkeDialog';
+import OnskeDialog from './LeggTilOnskeDialog';
 import AddAllowedFriends from './AddViewersToMyListComponent';
 
 class MinListe extends Component {
   constructor(props) {
     super(props);
-    this.state = { nyttOnskeTekst: '' }
   }
 
   componentDidMount() {
@@ -32,23 +30,9 @@ class MinListe extends Component {
     this.props.onSubscribeToMyAllowedViewers();
   }
 
-  lagreOnske() {
-    const { nyttOnskeTekst } = this.state;
-    if (nyttOnskeTekst) {
-      addWishToMyList({ onskeTekst: nyttOnskeTekst });
-    }
-    this.setState({ nyttOnskeTekst: '' })
-  }
-
   slettOnske(onske) {
     removeWishFromMyList(onske.key);
   }
-
-  onKeyPressed = event => {
-    if (event.keyCode === 13) {
-      this.lagreOnske();
-    }
-  };
 
   populerMinListe() {
     const { mineOnsker, onToggleLenkeDialog } = this.props;
@@ -79,7 +63,7 @@ class MinListe extends Component {
   }
 
   render() {
-    const { innloggetBrukerNavn, mineOnsker } = this.props;
+    const { innloggetBrukerNavn, mineOnsker, onToggleLenkeDialog } = this.props;
     return (
       <div className="minListe">
         <p>
@@ -87,19 +71,7 @@ class MinListe extends Component {
         </p>
         <AddAllowedFriends />
         <div className="addNewWish">
-          <TextField
-            id="addNewWishField"
-            label="Legg til nytt ønske"
-            className="addNewWishField"
-            value={this.state.nyttOnskeTekst}
-            onChange={(e) => this.setState({ nyttOnskeTekst: e.target.value })}
-            margin="normal"
-            variant="outlined"
-            onKeyDown={this.onKeyPressed}
-          />
-          <Button className="addNewWishButton" onClick={() => this.lagreOnske()} variant="fab" color="primary" aria-label="Add">
-            <AddIcon />
-          </Button>
+          <Button className="addNewWishButton" variant="contained" color="default" onClick={() => onToggleLenkeDialog(-1)} startIcon={<PlaylistAddIcon />}>Legg til ønske </Button>
         </div>
 
         <div>
@@ -110,7 +82,7 @@ class MinListe extends Component {
                 {mineOnsker.length > 0 && <Divider />}
                 {this.populerMinListe()}
               </List>
-              <LenkeDialog />
+              <OnskeDialog />
             </div>
           </Grid>
         </div>
@@ -118,6 +90,15 @@ class MinListe extends Component {
     );
   }
 }
+
+MinListe.propTypes = {
+  onAbonnerPaaMinOnskeliste: PropTypes.func,
+  onSubscribeToMyAllowedViewers: PropTypes.func,
+  onToggleLenkeDialog: PropTypes.func,
+  onEndreHeaderTekst: PropTypes.func,
+  innloggetBrukerNavn: PropTypes.string,
+  mineOnsker: PropTypes.array
+};
 
 const mapStateToProps = state => ({
   innloggetBrukerNavn: state.innloggetBruker.navn,

@@ -15,11 +15,11 @@ const styles = theme => ({
     justifyContent: 'center',
   },
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     minWidth: 120,
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
 });
 
@@ -37,11 +37,11 @@ class ListeVelger extends Component {
       this.props.onHentValgtVennsListe(valgtBrukerUid);
       this.props.onSettValgtVenn(this.finnValgtVennObjekt(valgtBrukerUid)[0]);
     }
-  }
+  };
 
   finnValgtVennObjekt = (valgtUid) => {
     return this.props.allUsers.filter(x => x.uid === valgtUid)
-  }
+  };
 
   render() {
     const { classes, allUsers, allowedListsForMe } = this.props;

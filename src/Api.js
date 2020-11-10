@@ -10,6 +10,7 @@ import {
   updateAllowedViewers,
   resettPassordMailSendt
 } from "./actions/actions";
+import {opprettUrlAv} from "./utils/util";
 
 const mapTolist = res => res.val() ?
   Object.keys(res.val()).map(k => {
@@ -29,11 +30,7 @@ export const removeWishFromMyList = wishId => {
 
 export const updateLinkOnWishOnMyList = (newLink, wishId) => {
   const wishRef = myWishlistRef().child(wishId);
-  if (newLink !== '' && !newLink.startsWith('http')) {
-    wishRef.update({ url: 'http://' + newLink })
-  } else {
-    wishRef.update({ url: newLink });
-  }
+  wishRef.update({url: opprettUrlAv(newLink)});
 };
 
 export const updateWishTextOnMyList = (newText, wishId) => {
@@ -45,6 +42,14 @@ export const updateWishOnListWith = (newValues, wish, listId) => {
   const wishKey = wish.key;
   delete wish.key;
   wishlistRef(listId).child(wishKey).update(Object.assign({}, wish, newValues));
+  /* wishlistRef(listId).child(wishKey).update(
+      {
+        ...wish,
+        kjopt: newValues.kjopt,
+        kjoptAv: newValues.kjoptAv,
+        kjoptAvNavn: newValues.kjoptAvNavn
+      }
+      ); */
 };
 
 export const fetdhMinOnskeliste = () => async dispatch => {
@@ -121,7 +126,7 @@ export const logOut = () => async dispatch => {
   }).catch(error => {
     alert(error);
   })
-}
+};
 
 export const opprettNyBruker = (brukernavn, passord, firstName, lastName) => async dispatch => {
   const navn = firstName + " " + lastName;

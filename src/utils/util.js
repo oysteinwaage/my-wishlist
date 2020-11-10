@@ -7,3 +7,5 @@ export const erInnloggetBrukersUid = uid => auth.currentUser.uid === uid;
 export const finnPersonMedUid = (uid, personer) => {
   return personer.find(x => x.uid === uid);
 };
+
+export const opprettUrlAv = url =>  url && !url.startsWith('http') ? 'http://' + url : url;

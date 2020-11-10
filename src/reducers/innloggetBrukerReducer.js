@@ -15,7 +15,7 @@ export default function innloggetBruker(state = initialState.innloggetBruker, ac
     case TOGGLE_LENKE_DIALOG:
       return Object.assign({}, state, {
         openLenkeDialog: !state.openLenkeDialog,
-        openLenkeDialogOnske: action.index,
+        openLenkeDialogOnske: action.index || {},
       });
     case UPDATE_ALLOWED_VIEWERS:
       return Object.assign({}, state, {
