@@ -58,9 +58,9 @@ export const fetdhMinOnskeliste = () => async dispatch => {
   });
 };
 
-export const fetdhOnskelisteForUid = (uid) => async dispatch => {
+export const fetdhOnskelisteForUid = (uid, venn) => async dispatch => {
   wishlistRef(uid).on("value", snapshot => {
-    dispatch(mottaValgtVennsListe(mapTolist(snapshot)));
+    dispatch(mottaValgtVennsListe(mapTolist(snapshot), venn));
   });
 };
 

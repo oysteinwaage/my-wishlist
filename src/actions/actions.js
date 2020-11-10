@@ -49,18 +49,11 @@ export function brukerLoggetInn(user) {
 
 // vennelister
 export const MOTTA_VALGT_VENNS_LISTE = 'MOTTA_VALGT_VENNS_LISTE';
-export function mottaValgtVennsListe(nyListe) {
+export function mottaValgtVennsListe(nyListe, venn) {
   return {
     type: MOTTA_VALGT_VENNS_LISTE,
     nyListe,
-  };
-}
-
-export const SETTE_VALGT_VENN = 'SETTE_VALGT_VENN';
-export function setValgtVenn(venn) {
-  return {
-    type: SETTE_VALGT_VENN,
-    venn,
+    venn
   };
 }
 
