@@ -38,6 +38,11 @@ export const updateWishTextOnMyList = (newText, wishId) => {
   wishRef.update({ onskeTekst: newText });
 };
 
+export const updateAntallOnMyList = (newAntall, wishId) => {
+  const wishRef = myWishlistRef().child(wishId);
+  wishRef.update({ antall: newAntall });
+};
+
 export const updateWishOnListWith = (newValues, wish, listId) => {
   const wishKey = wish.key;
   delete wish.key;
@@ -98,7 +103,6 @@ export const loggInn = (brukernavn, passord) => async dispatch => {
     .then(user => {
       dispatch(brukerLoggetInn(user.user));
       dispatch(push('/minliste'));
-      dispatch(fetdhUsers());
     })
     .catch(function (error) {
       alert(error);
@@ -113,7 +117,7 @@ export const resetPassord = (mail) => async dispatch =>{
       .catch( () => dispatch(resettPassordMailSendt('Noe gikk feil! Sjekk at du har skrevet inn riktig mail og prøv igjen')))
 };
 
-export const fetdhUsers = () => async dispatch => {
+export const fetchUsers = () => async dispatch => {
   usersRef.once('value', snapshot => {
     dispatch(mottaBrukere(mapTolist(snapshot).sort((a, b) => a.navn.localeCompare(b.navn))));
   });

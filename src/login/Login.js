@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import connect from 'react-redux/es/connect/connect';
+import firebase from "firebase";
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
 import logo from '../img/logo.svg';
 import {loggInn, opprettNyBruker, resetPassord} from '../Api';
 import {endreHeaderTekst, toggleVisOpprettBruker} from '../actions/actions';
+import PropTypes from "prop-types";
+import {push} from "connected-react-router";
 
 const initState = {
     username: '',
@@ -22,6 +25,14 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = initState;
+
+        //TODO sleng på en spinner (som kan brukes alle steder man laster) som kjører mens vi venter på svar på den under
+        const {onSendTilHovedside} = this.props;
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                onSendTilHovedside();
+            }
+        });
     }
 
     innsendigKnappTrykket() {
@@ -141,6 +152,18 @@ const style = {
     margin: 15,
 };
 
+
+Login.propTypes = {
+    onLoggInn: PropTypes.func,
+    onRegistrerNyBruker: PropTypes.func,
+    onEndreHeaderTekst: PropTypes.func,
+    onToggleVisOpprettBruker: PropTypes.func,
+    onSendResettPassordMail: PropTypes.func,
+    onSendTilHovedside: PropTypes.func,
+    visOpprettNyBruker: PropTypes.bool,
+    infoResettMailSendt: PropTypes.string
+};
+
 const mapStateToProps = state => ({
     visOpprettNyBruker: state.config.visOpprettNyBruker,
     infoResettMailSendt: state.config.infoResettMailSendt,
@@ -152,6 +175,7 @@ const mapDispatchToProps = dispatch => ({
     onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
     onToggleVisOpprettBruker: () => dispatch(toggleVisOpprettBruker()),
     onSendResettPassordMail: (mail) => dispatch(resetPassord(mail)),
+    onSendTilHovedside: () => dispatch(push('/minliste'))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

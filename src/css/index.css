@@ -36,6 +36,22 @@
 .onskeKjopt .onskeKjoptTekst {
   font-style: italic;
 }
+.onskeTekstDialog {
+  font-style: italic;
+  font-weight: bold;
+}
+.onskeTekstDialogLiten {
+  font-size: small;
+}
+.antallOnskerTatt {
+  display: flex;
+  align-self: flex-start;
+  padding: 0 0 10px 16px;
+}
+.fjernPaddingUnder {
+  padding-bottom: 0!important;
+  margin-bottom: 0!important;
+}
 .minListe {
   margin: 0 10px;
 }
@@ -54,6 +70,19 @@
   .minListe .minOnskeliste .wishText {
     max-width: 60%;
   }
+}
+.minListe .minOnskeliste .antallOnsker {
+  display: flex;
+  align-content: flex-start;
+  padding: 0 0 10px 16px;
+  font-size: 0.875rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+}
+.minListe .minOnskeliste .MuiDialog-paper {
+  margin: 32px 5px;
 }
 body {
   min-height: 100vh;

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
@@ -14,102 +14,106 @@ import EditIcon from '@material-ui/icons/Edit'
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { fetdhMinOnskeliste, removeWishFromMyList, fetchViewersToMyList } from '../Api';
-import { toggleLenkeDialog, endreHeaderTekst } from '../actions/actions';
+import {removeWishFromMyList} from '../Api';
+import {toggleLenkeDialog, endreHeaderTekst} from '../actions/actions';
 import OnskeDialog from './LeggTilOnskeDialog';
 import AddAllowedFriends from './AddViewersToMyListComponent';
 
 class MinListe extends Component {
-  constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  componentDidMount() {
-    this.props.onEndreHeaderTekst('Rediger ønskeliste');
-    this.props.onAbonnerPaaMinOnskeliste();
-    this.props.onSubscribeToMyAllowedViewers();
-  }
+    componentDidMount() {
+        const {onEndreHeaderTekst} = this.props;
+        onEndreHeaderTekst('Rediger ønskeliste');
+    }
 
-  slettOnske(onske) {
-    removeWishFromMyList(onske.key);
-  }
+    slettOnske(onske) {
+        removeWishFromMyList(onske.key);
+    }
 
-  populerMinListe() {
-    const { mineOnsker, onToggleLenkeDialog } = this.props;
-    return mineOnsker.map(value =>
-      <div key={value.onskeTekst + mineOnsker.indexOf(value)}>
-        <ListItem>
-          <ListItemText
-            className='wishText'
-            primary={value.onskeTekst}
-            secondary={value.url && <a href={value.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
-          />
-          <ListItemSecondaryAction className='wishIconMenu'>
-            <Tooltip title='Endre ønske'>
-              <IconButton aria-label="Edit" onClick={() => onToggleLenkeDialog(value)}>
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title='Slett'>
-              <IconButton aria-label="Delete" onClick={() => this.slettOnske(value)}>
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <Divider />
-      </div>,
-    );
-  }
+    populerMinListe() {
+        const {mineOnsker, onToggleLenkeDialog} = this.props;
+        return mineOnsker.map(value =>
+            <div key={value.onskeTekst + mineOnsker.indexOf(value)}>
+                <ListItem className={value.antall > 1 ? 'fjernPaddingUnder' : ''}>
+                    <ListItemText
+                        className='wishText'
+                        primary={value.onskeTekst}
+                        secondary={value.url &&
+                        <a href={value.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
+                    />
+                    <ListItemSecondaryAction className='wishIconMenu'>
+                        <Tooltip title='Endre ønske'>
+                            <IconButton aria-label="Edit" onClick={() => onToggleLenkeDialog(value)}>
+                                <EditIcon/>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title='Slett'>
+                            <IconButton aria-label="Delete" onClick={() => this.slettOnske(value)}>
+                                <DeleteIcon/>
+                            </IconButton>
+                        </Tooltip>
+                    </ListItemSecondaryAction>
+                </ListItem>
+                {value.antall && value.antall > 1 &&
+                <ListItemText
+                    className='antallOnskerTatt'
+                    secondary={"Antall: " + value.antall}
+                />
+                }
+                <Divider/>
+            </div>,
+        );
+    }
 
-  render() {
-    const { innloggetBrukerNavn, mineOnsker, onToggleLenkeDialog } = this.props;
-    return (
-      <div className="minListe">
-        <p>
-          Velkommen {innloggetBrukerNavn}
-        </p>
-        <AddAllowedFriends />
-        <div className="addNewWish">
-          <Button className="addNewWishButton" variant="contained" color="default" onClick={() => onToggleLenkeDialog(-1)} startIcon={<PlaylistAddIcon />}>Legg til ønske </Button>
-        </div>
+    render() {
+        const {innloggetBrukerNavn, mineOnsker, onToggleLenkeDialog} = this.props;
+        return (
+            <div className="minListe">
+                <p>
+                    Velkommen {innloggetBrukerNavn}
+                </p>
+                <AddAllowedFriends/>
+                <div className="addNewWish">
+                    <Button className="addNewWishButton" variant="contained" color="default"
+                            onClick={() => onToggleLenkeDialog(-1)} startIcon={<PlaylistAddIcon/>}>Legg til
+                        ønske </Button>
+                </div>
 
-        <div>
-          <Grid>
-            <h2>Min ønskeliste</h2>
-            <div className="minOnskeliste">
-              <List dense={false}>
-                {mineOnsker.length > 0 && <Divider />}
-                {this.populerMinListe()}
-              </List>
-              <OnskeDialog />
+                <div>
+                    <Grid>
+                        <h2>Min ønskeliste</h2>
+                        <div className="minOnskeliste">
+                            <List dense={false}>
+                                {mineOnsker.length > 0 && <Divider/>}
+                                {this.populerMinListe()}
+                            </List>
+                            <OnskeDialog/>
+                        </div>
+                    </Grid>
+                </div>
             </div>
-          </Grid>
-        </div>
-      </div>
-    );
-  }
+        );
+    }
 }
 
 MinListe.propTypes = {
-  onAbonnerPaaMinOnskeliste: PropTypes.func,
-  onSubscribeToMyAllowedViewers: PropTypes.func,
-  onToggleLenkeDialog: PropTypes.func,
-  onEndreHeaderTekst: PropTypes.func,
-  innloggetBrukerNavn: PropTypes.string,
-  mineOnsker: PropTypes.array
+    onToggleLenkeDialog: PropTypes.func,
+    onEndreHeaderTekst: PropTypes.func,
+    innloggetBrukerNavn: PropTypes.string,
+    mineOnsker: PropTypes.array
 };
 
 const mapStateToProps = state => ({
-  innloggetBrukerNavn: state.innloggetBruker.navn,
-  mineOnsker: state.innloggetBruker.mineOnsker,
+    innloggetBrukerNavn: state.innloggetBruker.navn,
+    mineOnsker: state.innloggetBruker.mineOnsker,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAbonnerPaaMinOnskeliste: () => dispatch(fetdhMinOnskeliste()),
-  onSubscribeToMyAllowedViewers: () => dispatch(fetchViewersToMyList()),
-  onToggleLenkeDialog: (index) => dispatch(toggleLenkeDialog(index)),
-  onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
+    onToggleLenkeDialog: (index) => dispatch(toggleLenkeDialog(index)),
+    onEndreHeaderTekst: (nyTekst) => dispatch(endreHeaderTekst(nyTekst)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MinListe);
