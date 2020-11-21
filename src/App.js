@@ -28,6 +28,9 @@ class App extends Component {
                 onSubscribeToMyAllowedViewers();
                 onFetchListsICanView();
             } else {
+                if (window.location.pathname === "/") {
+                    onSettLasterData(false);
+                }
                 onSendTilLogin();
             }
         });
