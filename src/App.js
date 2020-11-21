@@ -9,13 +9,17 @@ import MinListe from './minliste/MinListe';
 import Vennelister from './vennelister/VenneLister';
 import Profil from './profil/Profil';
 import AppBar from './components/AppBarComponent';
-import {brukerLoggetInn} from "./actions/actions";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import {brukerLoggetInn, lasterData} from "./actions/actions";
 import {fetchListsIAmAllowedToView, fetchUsers, fetchViewersToMyList, fetdhMinOnskeliste} from "./Api";
 
 class App extends Component {
 
     componentDidMount() {
-        const {onSendTilLogin, onBrukerLoggetInn, onAbonnerPaaMinOnskeliste, onSubscribeToMyAllowedViewers, onFetchListsICanView, onFetchAllUsers} = this.props;
+        const {onSendTilLogin, onBrukerLoggetInn, onAbonnerPaaMinOnskeliste, onSubscribeToMyAllowedViewers,
+            onFetchListsICanView, onFetchAllUsers, onSettLasterData} = this.props;
+        onSettLasterData(true);
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 onBrukerLoggetInn(user);
@@ -31,8 +35,12 @@ class App extends Component {
 
 
     render() {
+        const {isLoading} = this.props;
         return (
             <div className="App">
+                <Backdrop className="backDrop" open={isLoading}>
+                    <CircularProgress color="secondary" />
+                </Backdrop>
                 <AppBar/>
                 <div className="content">
                     <Switch>
@@ -53,8 +61,14 @@ App.propTypes = {
     onSubscribeToMyAllowedViewers: PropTypes.func,
     onBrukerLoggetInn: PropTypes.func,
     onFetchListsICanView: PropTypes.func,
-    onFetchAllUsers: PropTypes.func
+    onFetchAllUsers: PropTypes.func,
+    onSettLasterData: PropTypes.func,
+    isLoading: PropTypes.bool
 };
+
+const mapStateToProps = state => ({
+   isLoading: state.config.isLoading,
+});
 
 const mapDispatchToProps = dispatch => ({
     onAbonnerPaaMinOnskeliste: () => dispatch(fetdhMinOnskeliste()),
@@ -62,7 +76,8 @@ const mapDispatchToProps = dispatch => ({
     onBrukerLoggetInn: (user) => dispatch(brukerLoggetInn(user)),
     onFetchListsICanView: () => dispatch(fetchListsIAmAllowedToView()),
     onFetchAllUsers: () => dispatch(fetchUsers()),
-    onSendTilLogin: () => dispatch(push('/'))
+    onSendTilLogin: () => dispatch(push('/')),
+    onSettLasterData: (isLoading) => dispatch(lasterData(isLoading))
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

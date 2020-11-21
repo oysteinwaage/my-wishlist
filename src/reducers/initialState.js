@@ -13,6 +13,7 @@ export default {
     visOpprettNyBruker: false,
     brukere: [],
     infoResettMailSendt: '',
+    isLoading: false,
   },
   vennersLister: {
     allowedListsForMe: [],

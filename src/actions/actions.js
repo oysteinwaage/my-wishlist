@@ -89,3 +89,11 @@ export function resettPassordMailSendt(infoText) {
   };
 }
 
+export const SETT_IS_LOADING = 'SETT_IS_LOADING';
+export function lasterData(isLoading) {
+  return {
+    type: SETT_IS_LOADING,
+      isLoading,
+  };
+}
+
