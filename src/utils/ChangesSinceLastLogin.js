@@ -45,7 +45,7 @@ class ChangesSinceLastLogin extends Component {
         const {lastSeenVersion} = this.props;
         return (
             <Dialog
-                open={currentVersion > lastSeenVersion}
+                open={currentVersion > lastSeenVersion && window.location.pathname !== '/'}
                 scroll='paper'
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
