@@ -48,9 +48,15 @@
   align-self: flex-start;
   padding: 0 0 10px 16px;
 }
+.antallOnskerTatt.erFavoritt {
+  padding: 0 0 10px 29px;
+}
 .fjernPaddingUnder {
   padding-bottom: 0!important;
   margin-bottom: 0!important;
+}
+.fjernPaddingVenstre {
+  padding-left: 0!important;
 }
 .minListe {
   margin: 0 10px;
@@ -83,6 +89,30 @@
 }
 .minListe .minOnskeliste .MuiDialog-paper {
   margin: 32px 5px;
+}
+.minListe .antallOnskerTatt {
+  display: flex;
+  align-self: flex-start;
+  padding: 0 0 10px 29px;
+}
+.stjerne {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.stjerne.favoritt {
+  color: #edc600;
+}
+.stjerne.favorittTatt {
+  color: gold;
+}
+.changesContent .changesHeader {
+  font-weight: bold;
+}
+.changesContent .changesText {
+  margin-left: 10px;
+}
+.changesContent .changesText .header {
+  font-style: italic;
 }
 body {
   min-height: 100vh;

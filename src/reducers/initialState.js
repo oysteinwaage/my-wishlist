@@ -6,6 +6,8 @@ export default {
     openLenkeDialog: false,
     openLenkeDialogOnske: {},
     allowedViewers: [],
+    lastSeenVersion: 0,
+    userDbKey: ''
   },
   brukere: {},
   config: {

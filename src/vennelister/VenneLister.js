@@ -18,6 +18,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Slide from '@material-ui/core/Slide';
+import StarIcon from '@material-ui/icons/Star';
 
 import ListeVelger from './ListeVelger';
 import {endreHeaderTekst} from '../actions/actions';
@@ -30,7 +32,7 @@ import {
     myWishlistId,
     totalValgt
 } from '../utils/util';
-import Slide from '@material-ui/core/Slide';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -49,6 +51,7 @@ class VenneLister extends Component {
     }
 
     kjoptAlleOnskerClassname = onske => onske.antall === totalValgt(onske) ? inneholderInnloggetBrukersUid(onske.kjoptAvListe) ? 'onskeKjopt kjoptAvDeg' : 'onskeKjopt' : '';
+    onskeErFavoritt = onske => onske.favoritt ? ' fjernPaddingVenstre' : '';
 
     onMarkerOnskeSomKjopt = onske => event => {
         const {valgtVenn} = this.props;
@@ -97,9 +100,12 @@ class VenneLister extends Component {
     };
 
     populerOnskeliste = (onskeliste) =>
-        onskeliste.map(onske =>
+        onskeliste.sort((a, b) => !a.favoritt - !b.favoritt).map(onske =>
             <div key={onske.onskeTekst + onskeliste.indexOf(onske)}>
-                <ListItem className={this.kjoptAlleOnskerClassname(onske) + (!alleOnskerTatt(onske) && onske.antall > 1 ? ' fjernPaddingUnder' : '')}>
+                <ListItem className={this.kjoptAlleOnskerClassname(onske) + this.onskeErFavoritt(onske) + (!alleOnskerTatt(onske) && onske.antall > 1 ? ' fjernPaddingUnder' : '')}>
+                    {onske.favoritt &&
+                        <StarIcon className={alleOnskerTatt(onske) ? "stjerne favorittTatt" : "stjerne favoritt"} />
+                    }
                     <ListItemText
                         className={alleOnskerTatt(onske) ? 'onskeKjoptTekst ' : onske.antall > 1 ? 'fjernPaddingUnder' : ''}
                         primary={onske.onskeTekst}
@@ -115,7 +121,7 @@ class VenneLister extends Component {
                 </ListItem>
                 {onske.antall && onske.antall > 1 && !alleOnskerTatt(onske) &&
                 <ListItemText
-                    className='antallOnskerTatt'
+                    className={onske.favoritt ? 'antallOnskerTatt erFavoritt' : 'antallOnskerTatt'}
                     secondary={"Antall tatt: " + totalValgt(onske) + "/" + onske.antall}
                 />}
                 <Divider/>

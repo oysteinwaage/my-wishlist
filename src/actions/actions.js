@@ -47,6 +47,14 @@ export function brukerLoggetInn(user) {
   };
 }
 
+export const SET_LAST_SEEN_VERSION = 'SET_LAST_SEEN_VERSION';
+export function setLastSeenVersion(newVersion) {
+  return {
+    type: SET_LAST_SEEN_VERSION,
+    newVersion,
+  };
+}
+
 // vennelister
 export const MOTTA_VALGT_VENNS_LISTE = 'MOTTA_VALGT_VENNS_LISTE';
 export function mottaValgtVennsListe(nyListe, venn) {

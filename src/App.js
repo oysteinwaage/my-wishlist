@@ -11,8 +11,10 @@ import Profil from './profil/Profil';
 import AppBar from './components/AppBarComponent';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
 import {brukerLoggetInn, lasterData} from "./actions/actions";
 import {fetchListsIAmAllowedToView, fetchUsers, fetchViewersToMyList, fetdhMinOnskeliste} from "./Api";
+import ChangesSinceLastLogin from "./utils/ChangesSinceLastLogin";
 
 class App extends Component {
 
@@ -44,6 +46,7 @@ class App extends Component {
                 <Backdrop className="backDrop" open={isLoading}>
                     <CircularProgress color="secondary" />
                 </Backdrop>
+                {!isLoading && <ChangesSinceLastLogin />}
                 <AppBar/>
                 <div className="content">
                     <Switch>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {endreHeaderTekst} from "../actions/actions";
 
-class VenneLister extends Component {
+class Profil extends Component {
   componentDidMount() {
     const {onEndreHeaderTekst } = this.props;
     onEndreHeaderTekst();
@@ -24,5 +24,5 @@ const mapDispatchToProps = dispatch => ({
   onEndreHeaderTekst: () => dispatch(endreHeaderTekst('Profil')),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VenneLister);
+export default connect(mapStateToProps, mapDispatchToProps)(Profil);
 

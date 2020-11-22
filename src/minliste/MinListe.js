@@ -13,8 +13,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit'
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
 
-import {removeWishFromMyList} from '../Api';
+import {removeWishFromMyList, updateFavorittOnMyWish} from '../Api';
 import {toggleLenkeDialog, endreHeaderTekst} from '../actions/actions';
 import OnskeDialog from './LeggTilOnskeDialog';
 import AddAllowedFriends from './AddViewersToMyListComponent';
@@ -33,34 +35,44 @@ class MinListe extends Component {
         removeWishFromMyList(onske.key);
     }
 
+    settFavoritt(onske, erFavoritt) {
+        updateFavorittOnMyWish(onske.key, erFavoritt);
+    }
+
     populerMinListe() {
         const {mineOnsker, onToggleLenkeDialog} = this.props;
-        return mineOnsker.map(value =>
-            <div key={value.onskeTekst + mineOnsker.indexOf(value)}>
-                <ListItem className={value.antall > 1 ? 'fjernPaddingUnder' : ''}>
+        mineOnsker.sort((a, b) => !a.favoritt - !b.favoritt);
+        return mineOnsker.map(onske =>
+            <div key={onske.onskeTekst + mineOnsker.indexOf(onske)}>
+                <ListItem
+                    className={onske.antall > 1 ? 'fjernPaddingUnder fjernPaddingVenstre' : 'fjernPaddingVenstre'}>
+                    {onske.favoritt ?
+                        <StarIcon className="stjerne favoritt" onClick={() => this.settFavoritt(onske, false)}/> :
+                        <StarBorderIcon className="stjerne" onClick={() => this.settFavoritt(onske, true)}/>
+                    }
                     <ListItemText
                         className='wishText'
-                        primary={value.onskeTekst}
-                        secondary={value.url &&
-                        <a href={value.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
+                        primary={onske.onskeTekst}
+                        secondary={onske.url &&
+                        <a href={onske.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
                     />
                     <ListItemSecondaryAction className='wishIconMenu'>
                         <Tooltip title='Endre ønske'>
-                            <IconButton aria-label="Edit" onClick={() => onToggleLenkeDialog(value)}>
+                            <IconButton aria-label="Edit" onClick={() => onToggleLenkeDialog(onske)}>
                                 <EditIcon/>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title='Slett'>
-                            <IconButton aria-label="Delete" onClick={() => this.slettOnske(value)}>
+                            <IconButton aria-label="Delete" onClick={() => this.slettOnske(onske)}>
                                 <DeleteIcon/>
                             </IconButton>
                         </Tooltip>
                     </ListItemSecondaryAction>
                 </ListItem>
-                {value.antall && value.antall > 1 &&
+                {onske.antall && onske.antall > 1 &&
                 <ListItemText
                     className='antallOnskerTatt'
-                    secondary={"Antall: " + value.antall}
+                    secondary={"Antall: " + onske.antall}
                 />
                 }
                 <Divider/>

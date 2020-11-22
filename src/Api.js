@@ -8,7 +8,8 @@ import {
   receiveMyFriendLists,
   resetAllData,
   updateAllowedViewers,
-  resettPassordMailSendt
+  resettPassordMailSendt,
+  setLastSeenVersion
 } from "./actions/actions";
 import {opprettUrlAv} from "./utils/util";
 
@@ -41,6 +42,11 @@ export const updateWishTextOnMyList = (newText, wishId) => {
 export const updateAntallOnMyList = (newAntall, wishId) => {
   const wishRef = myWishlistRef().child(wishId);
   wishRef.update({ antall: newAntall });
+};
+
+export const updateFavorittOnMyWish = (wishId, erFavoritt) => {
+  const wishRef = myWishlistRef().child(wishId);
+  wishRef.update({ favoritt: erFavoritt });
 };
 
 export const updateWishOnListWith = (newValues, wish, listId) => {
@@ -123,6 +129,11 @@ export const fetchUsers = () => async dispatch => {
   });
 };
 
+export const updateLastSeenVersion = (newVersion, userDbKey) => async dispatch => {
+  usersRef.child(userDbKey).update({ lastSeenVersion: newVersion });
+  dispatch(setLastSeenVersion(newVersion));
+};
+
 export const logOut = () => async dispatch => {
   auth.signOut().then(function () {
     dispatch(push('/'));
@@ -141,8 +152,6 @@ export const opprettNyBruker = (brukernavn, passord, firstName, lastName) => asy
           usersRef.push().set({ navn, firstName, lastName, email: brukernavn, uid: auth.currentUser.uid });
           dispatch(brukerLoggetInn(auth.currentUser));
           dispatch(push('/minliste'));
-          // alert('Gratulerer du har opprettet bruker. Nå kan du logge inn!')
-          // dispatch(toggleVisOpprettBruker());
         })
     })
     .catch(function (error) {
