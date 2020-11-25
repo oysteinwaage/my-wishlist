@@ -33,8 +33,8 @@ export default function innloggetBruker(state = initialState.innloggetBruker, ac
       const me = action.brukere.find(b => b.uid === state.uid);
       return {
         ...state,
-        lastSeenVersion: me.lastSeenVersion || state.lastSeenVersion,
-        userDbKey: me.key
+        lastSeenVersion: (me && me.lastSeenVersion) || state.lastSeenVersion,
+        userDbKey: me && me.key
       };
     case SET_LAST_SEEN_VERSION:
       return {

@@ -130,8 +130,10 @@ export const fetchUsers = () => async dispatch => {
 };
 
 export const updateLastSeenVersion = (newVersion, userDbKey) => async dispatch => {
-  usersRef.child(userDbKey).update({ lastSeenVersion: newVersion });
-  dispatch(setLastSeenVersion(newVersion));
+    if (userDbKey) {
+        usersRef.child(userDbKey).update({lastSeenVersion: newVersion});
+    }
+    dispatch(setLastSeenVersion(newVersion));
 };
 
 export const logOut = () => async dispatch => {
