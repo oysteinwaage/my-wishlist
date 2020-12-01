@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import {updateLastSeenVersion} from '../Api';
 
-const currentVersion = 2.2;
+const currentVersion = 2.3;
 
 const changes = [
     {
@@ -34,6 +34,13 @@ const changes = [
             "Endringer-liste: Denne listen du ser nå med endringer siden sist innlogging",
             "Favoritter: Mulig å stjerne-markere de ønskene du har mest lyst på. Disse vil også legges øverst i listen din for å videre fremheve dem"
         ]
+    },
+    {
+        version: 2.3,
+        releaseDate: "01.12.2020",
+        changes: [
+            "Wenche-bug: Hver gang Wenche tok et ønske ble det registrert som 'tatt av undefined', dette skal nå være fikset",
+        ]
     }
 ];
 
@@ -52,7 +59,7 @@ class ChangesSinceLastLogin extends Component {
             >
                 <DialogTitle id="scroll-dialog-title">Endringer siden sist!</DialogTitle>
                 <DialogContent dividers={true}>
-                    {changes.map(change =>
+                    {changes.map(change => change.version > lastSeenVersion &&
                         <DialogContentText
                             id="scroll-dialog-description"
                             tabIndex={-1}

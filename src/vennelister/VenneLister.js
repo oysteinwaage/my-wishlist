@@ -85,13 +85,13 @@ class VenneLister extends Component {
     }
 
     onMarkerOnskerSomKjopt = () => {
-        const {valgtVenn} = this.props;
+        const {valgtVenn, mittNavn} = this.props;
         const {antallValgt, valgtOnske} = this.state;
 
         const newKjoptAvListe = [...((valgtOnske.kjoptAvListe || []).filter(vo => vo.kjoptAv !== myWishlistId()))];
 
         if (antallValgt > 0) {
-            newKjoptAvListe.push({kjoptAv: myWishlistId(), antallKjopt: antallValgt, kjoptAvNavn: myName()});
+            newKjoptAvListe.push({kjoptAv: myWishlistId(), antallKjopt: antallValgt, kjoptAvNavn: mittNavn});
         }
         const newValues = {kjoptAvListe: newKjoptAvListe};
 
@@ -195,12 +195,14 @@ class VenneLister extends Component {
 VenneLister.propTypes = {
     valgtVenn: PropTypes.object,
     valgtVenneListe: PropTypes.array,
-    onEndreHeaderTekst: PropTypes.func
+    onEndreHeaderTekst: PropTypes.func,
+    mittNavn: PropTypes.string
 };
 
 const mapStateToProps = state => ({
     valgtVenn: state.vennersLister.valgtVenn,
     valgtVennsListe: state.vennersLister.valgtVennsListe || [],
+    mittNavn: state.innloggetBruker.navn
 });
 
 const mapDispatchToProps = dispatch => ({
