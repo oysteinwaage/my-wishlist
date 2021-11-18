@@ -99,6 +99,14 @@ class VenneLister extends Component {
         this.resetLocalState();
     };
 
+    lagAntallOgStrlTekst = (onske) => {
+        let res = (onske.antall && onske.antall > 1 && !alleOnskerTatt(onske)) ? `Antall tatt: ${totalValgt(onske)}/${onske.antall}` : "";
+        if(onske.onskeSize) {
+            res = res ? res.concat(` - Strl: ${onske.onskeSize}`) : `Strl: ${onske.onskeSize}`;
+        }
+        return res;
+    };
+
     populerOnskeliste = (onskeliste) =>
         onskeliste.sort((a, b) => !a.favoritt - !b.favoritt).map(onske =>
             <div key={onske.onskeTekst + onskeliste.indexOf(onske)}>
@@ -117,12 +125,17 @@ class VenneLister extends Component {
                                       disabled={alleOnskerTatt(onske) && !antallAlleredeKjoptAvMeg(onske)}
                                       onChange={this.onMarkerOnskeSomKjopt(onske)}/>
                         </Tooltip>
+                        {/*<Tooltip title='Slett'>*/}
+                        {/*    <IconButton aria-label="Delete" onClick={() => removeWishFromCurrentList(this.props.valgtVenn.uid, onske.key)}>*/}
+                        {/*        <DeleteIcon/>*/}
+                        {/*    </IconButton>*/}
+                        {/*</Tooltip>*/}
                     </ListItemSecondaryAction>
                 </ListItem>
-                {onske.antall && onske.antall > 1 && !alleOnskerTatt(onske) &&
+                {(onske.antall && onske.antall > 1 && !alleOnskerTatt(onske) || onske.onskeSize) &&
                 <ListItemText
                     className={onske.favoritt ? 'antallOnskerTatt erFavoritt' : 'antallOnskerTatt'}
-                    secondary={"Antall tatt: " + totalValgt(onske) + "/" + onske.antall}
+                    secondary={this.lagAntallOgStrlTekst(onske)}
                 />}
                 <Divider/>
             </div>,

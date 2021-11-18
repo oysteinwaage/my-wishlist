@@ -39,6 +39,14 @@ class MinListe extends Component {
         updateFavorittOnMyWish(onske.key, erFavoritt);
     }
 
+    lagAntallOgStrlKomponent = (onske) => {
+        let res = (onske.antall && onske.antall > 1) ? `Antall: ${onske.antall}` : "";
+        if(onske.onskeSize) {
+            res = res ? res.concat(` - Strl: ${onske.onskeSize}`) : `Strl: ${onske.onskeSize}`;
+        }
+        return res;
+    };
+
     populerMinListe() {
         const {mineOnsker, onToggleLenkeDialog} = this.props;
         mineOnsker.sort((a, b) => !a.favoritt - !b.favoritt);
@@ -54,7 +62,8 @@ class MinListe extends Component {
                         className='wishText'
                         primary={onske.onskeTekst}
                         secondary={onske.url &&
-                        <a href={onske.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>}
+                        <a href={onske.url} target="_blank" rel="noopener noreferrer">Her kan den kjøpes</a>
+                        }
                     />
                     <ListItemSecondaryAction className='wishIconMenu'>
                         <Tooltip title='Endre ønske'>
@@ -69,10 +78,10 @@ class MinListe extends Component {
                         </Tooltip>
                     </ListItemSecondaryAction>
                 </ListItem>
-                {onske.antall && onske.antall > 1 &&
+                {((onske.antall && onske.antall > 1) || onske.onskeSize) &&
                 <ListItemText
                     className='antallOnskerTatt'
-                    secondary={"Antall: " + onske.antall}
+                    secondary={this.lagAntallOgStrlKomponent(onske)}
                 />
                 }
                 <Divider/>
@@ -90,7 +99,7 @@ class MinListe extends Component {
                 <AddAllowedFriends/>
                 <div className="addNewWish">
                     <Button className="addNewWishButton" variant="contained" color="default"
-                            onClick={() => onToggleLenkeDialog(-1)} startIcon={<PlaylistAddIcon/>}>Legg til
+                            onClick={() => onToggleLenkeDialog(null)} startIcon={<PlaylistAddIcon/>}>Legg til
                         ønske </Button>
                 </div>
 

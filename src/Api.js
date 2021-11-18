@@ -29,6 +29,11 @@ export const removeWishFromMyList = wishId => {
   myWishlistRef().child(wishId).remove();
 };
 
+// brukes når du vil kunne slette ønsker fra andres lister
+export const removeWishFromCurrentList = (listId, wishKey) => {
+    wishlistRef(listId).child(wishKey).remove();
+};
+
 export const updateLinkOnWishOnMyList = (newLink, wishId) => {
   const wishRef = myWishlistRef().child(wishId);
   wishRef.update({url: opprettUrlAv(newLink)});
@@ -42,6 +47,11 @@ export const updateWishTextOnMyList = (newText, wishId) => {
 export const updateAntallOnMyList = (newAntall, wishId) => {
   const wishRef = myWishlistRef().child(wishId);
   wishRef.update({ antall: newAntall });
+};
+
+export const updateSizeOnMyList = (newSize, wishId) => {
+  const wishRef = myWishlistRef().child(wishId);
+  wishRef.update({ onskeSize: newSize });
 };
 
 export const updateFavorittOnMyWish = (wishId, erFavoritt) => {
