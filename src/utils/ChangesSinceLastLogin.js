@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import {updateLastSeenVersion} from '../Api';
 
-const currentVersion = 2.3;
+const currentVersion = 2.4;
 
 const changes = [
     {
