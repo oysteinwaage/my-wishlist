@@ -19,7 +19,6 @@ import StarIcon from '@material-ui/icons/Star';
 import {removeWishFromMyList, updateFavorittOnMyWish} from '../Api';
 import {toggleLenkeDialog, endreHeaderTekst} from '../actions/actions';
 import OnskeDialog from './LeggTilOnskeDialog';
-import AddAllowedFriends from './AddViewersToMyListComponent';
 
 class MinListe extends Component {
     constructor(props) {
@@ -96,7 +95,6 @@ class MinListe extends Component {
                 <p>
                     Velkommen {innloggetBrukerNavn}
                 </p>
-                <AddAllowedFriends/>
                 <div className="addNewWish">
                     <Button className="addNewWishButton" variant="contained" color="default"
                             onClick={() => onToggleLenkeDialog(null)} startIcon={<PlaylistAddIcon/>}>Legg til

@@ -54,6 +54,7 @@ const changes = [
         releaseDate: "19.11.2021",
         changes: [
             "Kan nå legge inn dine generelle størrelser (på klær, sko osv) inne på din egen Profil-side (Hamburgermeny -> Profil -> Mine generelle mål). Disse generelle målene vil bli vist samtidig som folk ser på din ønskeliste, og vil gjøre det enklere for alle å kjøpe riktige størrelser på både konkrete ønsker du har i listen din, men også om noen vil gå off-list og prøve seg på egen hånd :)",
+            "Har flyttet listen hvor man legger til de som kan se på ønskelisten din inn til Profil-siden"
         ]
     }
 ];

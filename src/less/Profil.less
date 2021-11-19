@@ -1,14 +1,22 @@
 .ProfilSide {
   display: flex;
   justify-content: center;
-  &__egne-maal {
+  flex-wrap: wrap;
+
+  &__standard-profil-box {
     margin: 10px 20px;
     border: 1px solid rgba(128, 128, 128, 0.5);
     border-radius: 15px;
-    background-color: rgba(208, 249, 204, 0.47);
-    padding-bottom: 15px;
+    padding: 0 15px 15px 15px;
     box-shadow: 0 5px 5px 0 rgba(128, 128, 128, 0.5);
     max-width: 1000px;
+  }
+  &__viewers-list {
+    background-color: rgba(121, 211, 249, 0.46);
+  }
+
+  &__egne-maal {
+    background-color: rgba(208, 249, 204, 0.47);
 
     &__infotekst {
       font-size: small;
