@@ -55,6 +55,14 @@ export function setLastSeenVersion(newVersion) {
   };
 }
 
+export const UPDATE_MY_MEASUREMENTS = 'UPDATE_MY_MEASUREMENTS';
+export function updateMyMeasurements(newMeasurements) {
+  return {
+    type: UPDATE_MY_MEASUREMENTS,
+    newMeasurements,
+  };
+}
+
 // vennelister
 export const MOTTA_VALGT_VENNS_LISTE = 'MOTTA_VALGT_VENNS_LISTE';
 export function mottaValgtVennsListe(nyListe, venn) {

@@ -27,6 +27,27 @@
     transform: rotate(360deg);
   }
 }
+.vennerliste-side__measurements-container {
+  display: flex;
+  justify-content: center;
+}
+.vennerliste-side__measurements {
+  text-align: left;
+  margin: 10px 10px;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  border-radius: 15px;
+  background-color: rgba(208, 249, 204, 0.47);
+  padding: 0 20px;
+  box-shadow: 0 5px 5px 0 rgba(128, 128, 128, 0.5);
+  max-width: 400px;
+}
+.vennerliste-side__measurements__label {
+  font-weight: 600;
+}
+.vennerliste-side__liste {
+  display: flex;
+  justify-content: center;
+}
 .onskeKjopt {
   background: #d3b6b3;
 }
@@ -52,11 +73,11 @@
   padding: 0 0 10px 29px;
 }
 .fjernPaddingUnder {
-  padding-bottom: 0!important;
-  margin-bottom: 0!important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 .fjernPaddingVenstre {
-  padding-left: 0!important;
+  padding-left: 0 !important;
 }
 .minListe {
   margin: 0 10px;
@@ -113,6 +134,22 @@
 }
 .changesContent .changesText .header {
   font-style: italic;
+}
+.ProfilSide {
+  display: flex;
+  justify-content: center;
+}
+.ProfilSide__egne-maal {
+  margin: 10px 20px;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  border-radius: 15px;
+  background-color: rgba(208, 249, 204, 0.47);
+  padding-bottom: 15px;
+  box-shadow: 0 5px 5px 0 rgba(128, 128, 128, 0.5);
+  max-width: 1000px;
+}
+.ProfilSide__egne-maal__infotekst {
+  font-size: small;
 }
 body {
   min-height: 100vh;

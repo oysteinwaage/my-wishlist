@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import {updateLastSeenVersion} from '../Api';
 
-const currentVersion = 2.4;
+const currentVersion = 2.5;
 
 const changes = [
     {
@@ -46,7 +46,14 @@ const changes = [
         version: 2.4,
         releaseDate: "19.11.2021",
         changes: [
-            "Kan nå legge inn størrelse (på klær, sko osv) i eget felt, så vises det på samme måte som 'Antall' i ønskelisten din. Kan også oppdatere eksisterende ønsker med størrelse ved å trykke på blyanten på ønsket du vil endre på",
+            "Kan nå legge inn størrelse (på klær, sko osv) i eget felt på hvert enkelt ønske, så vises det på samme måte som 'Antall' i ønskelisten din. Kan også oppdatere eksisterende ønsker med størrelse ved å trykke på blyanten på ønsket du vil endre på",
+        ]
+    },
+    {
+        version: 2.5,
+        releaseDate: "19.11.2021",
+        changes: [
+            "Kan nå legge inn dine generelle størrelser (på klær, sko osv) inne på din egen Profil-side (Hamburgermeny -> Profil -> Mine generelle mål). Disse generelle målene vil bli vist samtidig som folk ser på din ønskeliste, og vil gjøre det enklere for alle å kjøpe riktige størrelser på både konkrete ønsker du har i listen din, men også om noen vil gå off-list og prøve seg på egen hånd :)",
         ]
     }
 ];
@@ -64,7 +71,7 @@ class ChangesSinceLastLogin extends Component {
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
             >
-                <DialogTitle id="scroll-dialog-title">Endringer siden sist!</DialogTitle>
+                <DialogTitle id="scroll-dialog-title">Endringer siden sist du logget inn!</DialogTitle>
                 <DialogContent dividers={true}>
                     {changes.map(change => change.version > lastSeenVersion &&
                         <DialogContentText
