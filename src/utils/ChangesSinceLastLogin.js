@@ -46,7 +46,7 @@ const changes = [
         version: 2.4,
         releaseDate: "19.11.2021",
         changes: [
-            "Kan nå legge inn størrelse på ønsker i eget felt, så vises det på samme måte som Antall i ønskelisten din. Kan også oppdatere eksisterende ønsker med størrelse ved å trykke på blyanten på ønsket du vil endre på.",
+            "Kan nå legge inn størrelse (på klær, sko osv) i eget felt, så vises det på samme måte som 'Antall' i ønskelisten din. Kan også oppdatere eksisterende ønsker med størrelse ved å trykke på blyanten på ønsket du vil endre på",
         ]
     }
 ];
