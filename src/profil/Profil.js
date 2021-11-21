@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {endreHeaderTekst} from "../actions/actions";
 import TextField from "@material-ui/core/TextField/TextField";
 import FormControl from "@material-ui/core/FormControl";
-import {updateMyMeasumentOnProfile, fetchUsersMeasurements} from "../Api";
+import {updateMyMeasumentOnProfile} from "../Api";
 import {finnLabelForStrl, measurementKeys} from "../utils/util";
 import AddViewersToMyListComponent from "../minliste/AddViewersToMyListComponent";
 
@@ -24,9 +24,8 @@ class Profil extends Component {
     }
 
     componentDidMount() {
-        const {myUserDbKey, onEndreHeaderTekst, onFetchUsersMeasurements} = this.props;
+        const {onEndreHeaderTekst} = this.props;
         onEndreHeaderTekst();
-        onFetchUsersMeasurements(myUserDbKey);
     }
 
     lagreNyttMaal = (sizeKey, newSize) => {
@@ -85,7 +84,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => ({
     onEndreHeaderTekst: () => dispatch(endreHeaderTekst('Profil')),
-    onFetchUsersMeasurements: (userDbKey) => dispatch(fetchUsersMeasurements(userDbKey))
 
 });
 

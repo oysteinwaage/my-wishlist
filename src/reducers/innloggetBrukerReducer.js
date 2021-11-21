@@ -5,7 +5,7 @@ import {
   MOTTA_MIN_ONSKELISTE,
   RESET_ALL_DATA,
   TOGGLE_LENKE_DIALOG,
-  UPDATE_ALLOWED_VIEWERS, SET_LAST_SEEN_VERSION, UPDATE_MY_MEASUREMENTS
+  UPDATE_ALLOWED_VIEWERS, SET_LAST_SEEN_VERSION
 } from '../actions/actions';
 
 export default function innloggetBruker(state = initialState.innloggetBruker, action) {
@@ -31,16 +31,11 @@ export default function innloggetBruker(state = initialState.innloggetBruker, ac
       });
     case MOTTA_BRUKERE:
       const me = action.brukere.find(b => b.uid === state.uid);
-      return {
+      return me ? {
         ...state,
-        lastSeenVersion: (me && me.lastSeenVersion) || state.lastSeenVersion,
-        userDbKey: me && me.key
-      };
-    case UPDATE_MY_MEASUREMENTS:
-      return {
-        ...state,
-        measurements: action.newMeasurements
-      };
+        ...me,
+        userDbKey: me.key
+      } : {...state};
     case SET_LAST_SEEN_VERSION:
       return {
         ...state,

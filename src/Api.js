@@ -17,7 +17,7 @@ import {
     resetAllData,
     updateAllowedViewers,
     resettPassordMailSendt,
-    setLastSeenVersion, updateMyMeasurements
+    setLastSeenVersion
 } from "./actions/actions";
 import {opprettUrlAv} from "./utils/util";
 
@@ -157,14 +157,6 @@ export const updateLastSeenVersion = (newVersion, userDbKey) => async dispatch =
 export const updateMyMeasumentOnProfile = (userDbKey, newSize, sizeKey) => {
     if (userDbKey) {
         usersRef.child(userDbKey).child("measurements").update({[sizeKey]: newSize});
-    }
-};
-
-export const fetchUsersMeasurements = (userDbKey) => (dispatch) => {
-    if (userDbKey) {
-        usersRef.child(userDbKey).child("measurements").on('value', snapshot => {
-            dispatch(updateMyMeasurements(snapshot.toJSON()));
-        })
     }
 };
 
