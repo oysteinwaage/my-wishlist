@@ -17,7 +17,7 @@ import {
     resetAllData,
     updateAllowedViewers,
     resettPassordMailSendt,
-    setLastSeenVersion
+    setLastSeenVersion, oppdaterMineKjoep
 } from "./actions/actions";
 import {opprettUrlAv} from "./utils/util";
 
@@ -115,6 +115,17 @@ export const fetchListsIAmAllowedToView = () => async dispatch => {
                 return k;
             }) : [];
         dispatch(receiveMyFriendLists(myLists));
+
+        myLists.forEach(key => {
+            wishlistRef(key).on("value", snapshot => {
+                const onsker = snapshot.val();
+                const onskerTatt = Object.keys(onsker || {})
+                    .filter(key => onsker[key].kjoptAvListe && onsker[key].kjoptAvListe.find(i => i.kjoptAv === myUid()))
+                    .map(key => onsker[key]);
+                    dispatch(oppdaterMineKjoep(key, onskerTatt));
+            });
+        });
+
         return myLists;
     });
 };

@@ -157,6 +157,43 @@
 .ProfilSide__egne-maal__infotekst {
   font-size: small;
 }
+.ProfilSide__mine-kjoep {
+  display: flex;
+  background-color: rgba(249, 162, 144, 0.47);
+  width: 100%;
+  text-align: left;
+  flex-wrap: wrap;
+}
+.ProfilSide__mine-kjoep__overskrift {
+  width: 100%;
+  text-align: center;
+}
+.ProfilSide__mine-kjoep__liste {
+  display: flex;
+  width: 100%;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+.ProfilSide__mine-kjoep__onsker {
+  width: 100%;
+  border-left: 1px solid rgba(128, 128, 128, 0.5);
+}
+.ProfilSide__mine-kjoep__liste-eier {
+  margin-right: 15px;
+  align-self: center;
+  font-weight: 500;
+  width: 150px;
+}
+@media only screen and (max-width: 400px) {
+  .ProfilSide__mine-kjoep__liste-eier {
+    width: 40%;
+    margin-right: 10px;
+  }
+}
+.ProfilSide__mine-kjoep__ingen-kjoep {
+  width: 100%;
+  text-align: center;
+}
 body {
   min-height: 100vh;
   margin: 0;

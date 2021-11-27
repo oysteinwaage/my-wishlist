@@ -8,7 +8,8 @@ export default {
     allowedViewers: [],
     lastSeenVersion: 0,
     userDbKey: '',
-    measurements: {}
+    measurements: {},
+    mineKjoep: {}
   },
   brukere: {},
   config: {

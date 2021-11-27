@@ -49,3 +49,5 @@ export const finnLabelForStrl = strlKey => {
       return "Hodemål"
   }
 };
+
+export const finnNavnFraUid = (uid, brukere) => (brukere.find(bruker => bruker.uid === uid) || {}).navn;
