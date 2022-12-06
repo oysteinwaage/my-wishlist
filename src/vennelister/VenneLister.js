@@ -135,7 +135,7 @@ class VenneLister extends Component {
                 </ListItem>
                 {(onske.antall && onske.antall > 1 && !alleOnskerTatt(onske) || onske.onskeSize) &&
                 <ListItemText
-                    className={onske.favoritt ? 'antallOnskerTatt erFavoritt' : 'antallOnskerTatt'}
+                    className={`${this.kjoptAlleOnskerClassname(onske)} ${onske.favoritt ? 'antallOnskerTatt erFavoritt' : 'antallOnskerTatt'}`}
                     secondary={this.lagAntallOgStrlTekst(onske)}
                 />}
                 <Divider/>
